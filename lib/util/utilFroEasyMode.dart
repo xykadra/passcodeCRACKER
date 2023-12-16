@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class UtilForAdditionalWidgets extends StatefulWidget {
+class UtilForEasyMode extends StatefulWidget {
   final String num1;
   final String num2;
   final String num3;
@@ -12,7 +12,7 @@ class UtilForAdditionalWidgets extends StatefulWidget {
   final Map<int, bool> isNumberOnCorrectSpot;
   final Map<int, bool> isNumberPresent;
 
-  UtilForAdditionalWidgets(
+  UtilForEasyMode(
       {required this.num1,
       required this.num2,
       required this.num3,
@@ -23,11 +23,11 @@ class UtilForAdditionalWidgets extends StatefulWidget {
       required this.isNumberPresent});
 
   @override
-  State<UtilForAdditionalWidgets> createState() =>
-      _UtilForAdditionalWidgetsState();
+  State<UtilForEasyMode> createState() =>
+      _UtilForEasyModeState();
 }
 
-class _UtilForAdditionalWidgetsState extends State<UtilForAdditionalWidgets> {
+class _UtilForEasyModeState extends State<UtilForEasyMode> {
   //if number is on right spot GREEN if that number is somewhere but not on
 
   //moram za svaki znati isPresent is isOnCorrectSpot

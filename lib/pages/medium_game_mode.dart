@@ -5,19 +5,21 @@ import "package:audioplayers/audioplayers.dart";
 import "package:awesome_snackbar_content/awesome_snackbar_content.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:passcodecr/choosing_difficulty.dart";
 import "package:passcodecr/pages/game_over_page.dart";
 
 import "package:passcodecr/pages/win_page.dart";
 import "package:passcodecr/util/utilForAdditionalWidget.dart";
+import "package:passcodecr/util/utilForMediumMode.dart";
 
-class WelcomePage extends StatefulWidget {
-  const WelcomePage({super.key});
+class MediumGameMode extends StatefulWidget {
+  const MediumGameMode({super.key});
 
   @override
-  State<WelcomePage> createState() => _WelcomePageState();
+  State<MediumGameMode> createState() => _MediumGameModeState();
 }
 
-class _WelcomePageState extends State<WelcomePage> {
+class _MediumGameModeState extends State<MediumGameMode> {
   //Lists
   List<int> inputNumbers = [];
 
@@ -52,15 +54,13 @@ class _WelcomePageState extends State<WelcomePage> {
     counterForWidgets < 9
         ? bodyElements.add(Padding(
             padding: const EdgeInsets.only(bottom: 5.0),
-            child: UtilForAdditionalWidgets(
+            child: UtilForMediumMode(
               num1: num1,
               num2: num2,
               num3: num3,
               num4: num4,
               correctNumbers: correctNumbers,
               correctSpots: correctSpots,
-              isNumberOnCorrectSpot: isNumberOnCorrectSpot,
-              isNumberPresent: isNumberPresent,
             ),
           ))
         : _navigateToGameOverPage(randomNumbers);
@@ -281,6 +281,25 @@ class _WelcomePageState extends State<WelcomePage> {
                     )),
                 GestureDetector(
                   onTap: () {
+                    changeGameMode(context);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    height: 30,
+                    width: 80,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.orange),
+                    child: Center(
+                        child: Text(
+                      'Medium',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                    )),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
                     setState(() {
                       colorOfText = Colors.white;
                       bodyElements.clear();
@@ -362,8 +381,10 @@ class _WelcomePageState extends State<WelcomePage> {
                       controller: num1Controller,
                       focusNode: _focusNode1,
                       onChanged: (String value) {
-                        _focusNode1.unfocus();
-                        FocusScope.of(context).requestFocus(_focusNode2);
+                        if (value.isNotEmpty) {
+                          _focusNode1.unfocus();
+                          FocusScope.of(context).requestFocus(_focusNode2);
+                        }
                       },
                       style: TextStyle(
                           color: Colors.black,
@@ -397,8 +418,10 @@ class _WelcomePageState extends State<WelcomePage> {
                       controller: num2Controller,
                       focusNode: _focusNode2,
                       onChanged: (String value) {
-                        _focusNode2.unfocus();
-                        FocusScope.of(context).requestFocus(_focusNode3);
+                        if (value.isNotEmpty) {
+                          _focusNode2.unfocus();
+                          FocusScope.of(context).requestFocus(_focusNode3);
+                        }
                       },
                       style: TextStyle(
                           color: Colors.black,
@@ -431,8 +454,10 @@ class _WelcomePageState extends State<WelcomePage> {
                       controller: num3Controller,
                       focusNode: _focusNode3,
                       onChanged: (String value) {
-                        _focusNode3.unfocus();
-                        FocusScope.of(context).requestFocus(_focusNode4);
+                        if (value.isNotEmpty) {
+                          _focusNode3.unfocus();
+                          FocusScope.of(context).requestFocus(_focusNode4);
+                        }
                       },
                       style: TextStyle(
                           color: Colors.black,
@@ -465,7 +490,9 @@ class _WelcomePageState extends State<WelcomePage> {
                       controller: num4Controller,
                       focusNode: _focusNode4,
                       onChanged: (String value) {
-                        _focusNode4.unfocus();
+                        if (value.isNotEmpty) {
+                          _focusNode4.unfocus();
+                        }
                       },
                       style: TextStyle(
                           color: Colors.black,
@@ -596,32 +623,32 @@ class _WelcomePageState extends State<WelcomePage> {
             ),
 
             //Uncomment this for debugging
-            Text(
-              "Random number: " + randomNumbers.toString(),
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold),
-            ),
-            Text(counterForWidgets.toString()),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => WelcomePage(),
-                      ));
-                },
-                child: Text("Generate new numbers")),
-            ElevatedButton(
-                onPressed: () {
-                  //Testing
-                  print("Printing numbers if they are present");
-                  print(isNumberPresent);
-                  print("Printing numbers if they are on correct  spot");
-                  print(isNumberOnCorrectSpot);
-                },
-                child: Text("See present and correct spots"))
+            // Text(
+            //   "Random number: " + randomNumbers.toString(),
+            //   style: TextStyle(
+            //       color: Colors.black,
+            //       fontSize: 25,
+            //       fontWeight: FontWeight.bold),
+            // ),
+            // Text(counterForWidgets.toString()),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //             builder: (context) => MediumGameMode(),
+            //           ));
+            //     },
+            //     child: Text("Generate new numbers")),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       //Testing
+            //       print("Printing numbers if they are present");
+            //       print(isNumberPresent);
+            //       print("Printing numbers if they are on correct  spot");
+            //       print(isNumberOnCorrectSpot);
+            //     },
+            //     child: Text("See present and correct spots"))
           ],
         ),
       )),
@@ -693,17 +720,10 @@ class _WelcomePageState extends State<WelcomePage> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    "1. DO NOT ENTER TWO SAME NUMBERS",
-                    style: TextStyle(color: Colors.black, fontSize: 15),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: Text(
-                      "2. DO NOT ENTER ZERO",
+                      "1. DO NOT ENTER ZERO",
                       style: TextStyle(color: Colors.black, fontSize: 15),
                     ),
                   ),
@@ -713,7 +733,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: Text(
-                      "3. DO NOT PRESS TRY WITHOUT INPUTING SOME NUMBERS",
+                      "2. DO NOT PRESS TRY WITHOUT INPUTING SOME NUMBERS",
                       style: TextStyle(color: Colors.black, fontSize: 15),
                     ),
                   ),
@@ -721,4 +741,38 @@ class _WelcomePageState extends State<WelcomePage> {
               ),
             ));
   }
+}
+
+Future<dynamic> changeGameMode(BuildContext context) {
+  return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChoosingDifficulty(),
+                      ));
+                },
+                child: Container(
+                  padding: EdgeInsets.all(2),
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Center(
+                      child: Text(
+                    "Yes",
+                    style: GoogleFonts.sourceCodePro(
+                        color: Colors.white, fontSize: 25),
+                  )),
+                ),
+              ),
+            ],
+            icon: Icon(Icons.error),
+            title: Text("Do you want to change Game MODE?"),
+          ));
 }

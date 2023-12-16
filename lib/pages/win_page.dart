@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
-import 'package:passcodecr/welcome_page.dart';
+import 'package:passcodecr/pages/easy_game_mode.dart';
 
 class WinPage extends StatelessWidget {
   final List<int> randomNumbers;
@@ -62,7 +62,7 @@ class WinPage extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => WelcomePage(),
+                      builder: (context) => EasyGameMode(),
                     ));
               },
               child: Padding(

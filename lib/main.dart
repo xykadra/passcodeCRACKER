@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:passcodecr/welcome_page.dart';
+import 'package:passcodecr/choosing_difficulty.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: WelcomePage(),
+      home: ChoosingDifficulty(),
     );
   }
 }
