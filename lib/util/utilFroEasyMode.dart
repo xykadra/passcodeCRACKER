@@ -6,9 +6,6 @@ class UtilForEasyMode extends StatefulWidget {
   final String num3;
   final String num4;
 
-  final int correctNumbers;
-  final int correctSpots;
-
   final Map<int, bool> isNumberOnCorrectSpot;
   final Map<int, bool> isNumberPresent;
 
@@ -17,14 +14,11 @@ class UtilForEasyMode extends StatefulWidget {
       required this.num2,
       required this.num3,
       required this.num4,
-      required this.correctNumbers,
-      required this.correctSpots,
       required this.isNumberOnCorrectSpot,
       required this.isNumberPresent});
 
   @override
-  State<UtilForEasyMode> createState() =>
-      _UtilForEasyModeState();
+  State<UtilForEasyMode> createState() => _UtilForEasyModeState();
 }
 
 class _UtilForEasyModeState extends State<UtilForEasyMode> {
@@ -61,9 +55,9 @@ class _UtilForEasyModeState extends State<UtilForEasyMode> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 0.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             width: 150,
@@ -131,42 +125,6 @@ class _UtilForEasyModeState extends State<UtilForEasyMode> {
                   ),
                 ],
               ),
-            ),
-          ),
-          Container(
-            height: 30,
-            width: 30,
-            decoration: BoxDecoration(
-                color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  widget.correctNumbers.toString(),
-                  style: TextStyle(
-                      color: getColorForNumber(4),
-                      fontSize: 24,
-                      fontWeight: FontWeight.normal),
-                )
-              ],
-            ),
-          ),
-          Container(
-            height: 30,
-            width: 30,
-            decoration: BoxDecoration(
-                color: Colors.black, borderRadius: BorderRadius.circular(30)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  widget.correctSpots.toString(),
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.normal),
-                )
-              ],
             ),
           ),
         ],

@@ -27,8 +27,8 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => EasyGameMode(),
-                      ));
+                          builder: (context) => EasyGameMode(),
+                          fullscreenDialog: true));
                 },
                 child: Container(
                   padding: EdgeInsets.all(8),
@@ -52,8 +52,8 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MediumGameMode(),
-                      ));
+                          builder: (context) => MediumGameMode(),
+                          fullscreenDialog: true));
                 },
                 child: Container(
                   padding: EdgeInsets.all(8),

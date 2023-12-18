@@ -166,33 +166,16 @@ class _MediumGameModeState extends State<MediumGameMode> {
     int correctSpots = 0;
 
     for (int i = 0; i < inputNumbers.length; i++) {
-      if (randomNumbers.contains(inputNumbers[i])) {
-        setState(() {
-          isNumberPresent[i] = true;
-        });
-
+      if (inputNumbers[i] == randomNumbers[i]) {
+        correctSpots++;
+      } else if (randomNumbers.contains(inputNumbers[i])) {
         correctNumbers++;
       }
 
-      if (inputNumbers[i] == randomNumbers[i]) {
-        setState(() {
-          isNumberOnCorrectSpot[i] = true;
-        });
-        correctSpots++;
-      }
+      // if (inputNumbers[i] == randomNumbers[i]) {
+      //   correctSpots++;
+      // }
     }
-
-    // Map<String, List<int>> result = {
-    //   'correctNumbers': isNumberPresent.entries
-    //       .where((entry) => entry.value)
-    //       .map((entry) => entry.key)
-    //       .toList(),
-    //   'correctSpots': isNumberOnCorrectSpot.entries
-    //       .where((entry) => entry.value)
-    //       .map((entry) => entry.key)
-    //       .toList(),
-    // };
-
     return {correctNumbers: correctSpots};
   }
 
@@ -623,32 +606,32 @@ class _MediumGameModeState extends State<MediumGameMode> {
             ),
 
             //Uncomment this for debugging
-            // Text(
-            //   "Random number: " + randomNumbers.toString(),
-            //   style: TextStyle(
-            //       color: Colors.black,
-            //       fontSize: 25,
-            //       fontWeight: FontWeight.bold),
-            // ),
-            // Text(counterForWidgets.toString()),
-            // ElevatedButton(
-            //     onPressed: () {
-            //       Navigator.push(
-            //           context,
-            //           MaterialPageRoute(
-            //             builder: (context) => MediumGameMode(),
-            //           ));
-            //     },
-            //     child: Text("Generate new numbers")),
-            // ElevatedButton(
-            //     onPressed: () {
-            //       //Testing
-            //       print("Printing numbers if they are present");
-            //       print(isNumberPresent);
-            //       print("Printing numbers if they are on correct  spot");
-            //       print(isNumberOnCorrectSpot);
-            //     },
-            //     child: Text("See present and correct spots"))
+            Text(
+              "Random number: " + randomNumbers.toString(),
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold),
+            ),
+            Text(counterForWidgets.toString()),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MediumGameMode(),
+                      ));
+                },
+                child: Text("Generate new numbers")),
+            ElevatedButton(
+                onPressed: () {
+                  //Testing
+                  print("Printing numbers if they are present");
+                  print(isNumberPresent);
+                  print("Printing numbers if they are on correct  spot");
+                  print(isNumberOnCorrectSpot);
+                },
+                child: Text("See present and correct spots"))
           ],
         ),
       )),

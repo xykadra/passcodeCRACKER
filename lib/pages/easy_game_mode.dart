@@ -37,6 +37,37 @@ class _EasyGameModeState extends State<EasyGameMode> {
     randomNumbers = _generateRandomNumbers();
   }
 
+  double heigthOfContainer1 = 40;
+  double heigthOfContainer2 = 40;
+  double heigthOfContainer3 = 40;
+  double heigthOfContainer4 = 40;
+
+  void changeHeightOfInputContainer(int containerNum) {
+    if (containerNum == 1) {
+      setState(() {
+        heigthOfContainer1 = 80;
+        heigthOfContainer2 = 40;
+        heigthOfContainer3 = 40;
+        heigthOfContainer4 = 40;
+      });
+    } else if (containerNum == 2) {
+      heigthOfContainer1 = 40;
+      heigthOfContainer2 = 55;
+      heigthOfContainer3 = 30;
+      heigthOfContainer4 = 30;
+    } else if (containerNum == 3) {
+      heigthOfContainer1 = 40;
+      heigthOfContainer2 = 40;
+      heigthOfContainer3 = 40;
+      heigthOfContainer4 = 55;
+    } else if (containerNum == 4) {
+      heigthOfContainer1 = 40;
+      heigthOfContainer2 = 40;
+      heigthOfContainer3 = 40;
+      heigthOfContainer4 = 55;
+    }
+  }
+
   void _chekForWin(int correctNumbers, int correctSpots) {
     if (correctNumbers == 4 && correctSpots == 4) {
       Navigator.push(
@@ -51,15 +82,16 @@ class _EasyGameModeState extends State<EasyGameMode> {
 
   void addBodyElements(String num1, String num2, String num3, String num4,
       int correctNumbers, int correctSpots, int counterForWidgets) {
-    counterForWidgets < 5 ? bodyElements.add(Padding(
-            padding: const EdgeInsets.only(bottom: 5.0),
+    counterForWidgets < 5
+        ? bodyElements.add(Padding(
+            padding: const EdgeInsets.only(
+              bottom: 5.0,
+            ),
             child: UtilForEasyMode(
               num1: num1,
               num2: num2,
               num3: num3,
               num4: num4,
-              correctNumbers: correctNumbers,
-              correctSpots: correctSpots,
               isNumberOnCorrectSpot: isNumberOnCorrectSpot,
               isNumberPresent: isNumberPresent,
             ),
@@ -110,45 +142,6 @@ class _EasyGameModeState extends State<EasyGameMode> {
   FocusNode _focusNode2 = FocusNode();
   FocusNode _focusNode3 = FocusNode();
   FocusNode _focusNode4 = FocusNode();
-
-  // bool isNumber1Present = false;
-  // bool isNumber1OnCorrectSpot = false;
-
-  // bool isNumber2Present = false;
-  // bool isNumber2OnCorrectSpot = false;
-
-  // bool isNumber3Present = false;
-  // bool isNumber3OnCorrectSpot = false;
-
-  // bool isNumber4Present = false;
-  // bool isNumber4OnCorrectSpot = false;
-
-  // Map<int, int> checkNumbers(List<int> inputNumbers, List<int> randomNumbers) {
-  //   int correctNumbers = 0;
-  //   int correctSpots = 0;
-
-  //   for (int i = 0; i < inputNumbers.length; i++) {
-  //     if (randomNumbers.contains(inputNumbers[i])) {
-  //       if (i == 0) {
-  //         setState(() {
-  //           isNumber1Present = true;
-  //         });
-  //       }
-  //       if (i == 1) {
-  //         setState(() {
-  //           isNumber2Present = true;
-  //         });
-  //       }
-  //       correctNumbers++;
-  //     }
-
-  //     if (inputNumbers[i] == randomNumbers[i]) {
-  //       correctSpots++;
-  //     }
-  //   }
-
-  //   return {correctNumbers: correctSpots};
-  // }
 
   Map<int, bool> isNumberPresent = {
     0: false,
@@ -223,7 +216,7 @@ class _EasyGameModeState extends State<EasyGameMode> {
       forceActionsBelow: true,
       content: AwesomeSnackbarContent(
         color: Colors.red[350],
-        title: 'Oh Hey!!',
+        title: 'LOL',
         message: message,
         messageFontSize: 18,
 
@@ -240,8 +233,8 @@ class _EasyGameModeState extends State<EasyGameMode> {
       ..showMaterialBanner(materialBanner);
   }
 
-  bool hasTwoSameNumbers(int a, int b, int c, int d) {
-    return a == b || a == c || a == d || b == c || b == d || c == d;
+  bool isAnyNumerZeor(int a, int b, int c, int d) {
+    return a == 0 || b == 0 || c == 0 || d == 0;
   }
 
   Widget build(BuildContext context) {
@@ -328,194 +321,185 @@ class _EasyGameModeState extends State<EasyGameMode> {
                 ),
               ],
             ),
-
-            Row(
-              children: [
-                Spacer(),
-                Container(
-                  width: 200,
-                  padding: EdgeInsets.all(10),
-                  //color: Colors.red,
-                  child: Column(
-                    children: [
-                      Text("CORRECT",
-                          style: TextStyle(
-                              color: colorOfText,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24)),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("NUMBER",
-                                style: TextStyle(color: colorOfText)),
-                            Text("SPOTS", style: TextStyle(color: colorOfText)),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+            SizedBox(
+              height: 15,
             ),
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 children: bodyElements,
               ),
             ),
+            SizedBox(
+              height: 15,
+            ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25),
+              padding: EdgeInsets.symmetric(horizontal: 60),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   //Input of numbers
-                  Container(
-                    //color: Colors.grey[200],
-                    height: 40,
-                    width: MediaQuery.of(context).size.width / 6,
-                    child: TextFormField(
-                      textInputAction: TextInputAction.next,
-                      controller: num1Controller,
-                      focusNode: _focusNode1,
-                      onChanged: (String value) {
-                        if (value.isNotEmpty) {
-                          _focusNode1.unfocus();
-                          FocusScope.of(context).requestFocus(_focusNode2);
-                        }
-                      },
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      maxLength: 1,
-                      onFieldSubmitted: (value) {
-                        print(value);
-                      },
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(bottom: 5),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        focusedBorder: OutlineInputBorder(
+                  GestureDetector(
+                    onTap: () {
+                      changeHeightOfInputContainer(1);
+                    },
+                    child: Container(
+                      //color: Colors.grey[200],
+                      height: heigthOfContainer1,
+                      width: MediaQuery.of(context).size.width / 6,
+                      child: TextFormField(
+                        textInputAction: TextInputAction.next,
+                        controller: num1Controller,
+                        focusNode: _focusNode1,
+                        onChanged: (String value) {
+                          if (value.isNotEmpty) {
+                            _focusNode1.unfocus();
+                            FocusScope.of(context).requestFocus(_focusNode2);
+                          }
+                        },
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        maxLength: 1,
+                        onFieldSubmitted: (value) {
+                          print(value);
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(bottom: 5),
+                          enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: Colors.black)),
-                        counterText: "",
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(color: Colors.black)),
+                          counterText: "",
+                        ),
                       ),
                     ),
                   ),
 
-                  Container(
-                    //color: Colors.white,
-                    height: 40,
-                    width: MediaQuery.of(context).size.width / 6,
-                    child: TextFormField(
-                      textInputAction: TextInputAction.next,
-                      controller: num2Controller,
-                      focusNode: _focusNode2,
-                      onChanged: (String value) {
-                        if (value.isNotEmpty) {
-                          _focusNode2.unfocus();
-                          FocusScope.of(context).requestFocus(_focusNode3);
-                        }
-                      },
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      maxLength: 1,
-                      onFieldSubmitted: (value) {
-                        print(value);
-                      },
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(bottom: 5),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        focusedBorder: OutlineInputBorder(
+                  GestureDetector(
+                    onTap: () {
+                      changeHeightOfInputContainer(2);
+                    },
+                    child: Container(
+                      //color: Colors.white,
+                      height: heigthOfContainer2,
+                      width: MediaQuery.of(context).size.width / 6,
+                      child: TextFormField(
+                        textInputAction: TextInputAction.next,
+                        controller: num2Controller,
+                        focusNode: _focusNode2,
+                        onChanged: (String value) {
+                          if (value.isNotEmpty) {
+                            _focusNode2.unfocus();
+                            FocusScope.of(context).requestFocus(_focusNode3);
+                          }
+                        },
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        maxLength: 1,
+                        onFieldSubmitted: (value) {
+                          print(value);
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(bottom: 5),
+                          enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: Colors.black)),
-                        counterText: "",
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(color: Colors.black)),
+                          counterText: "",
+                        ),
                       ),
                     ),
                   ),
-                  Container(
-                    //color: Colors.deepPurple,
-                    height: 40,
-                    width: MediaQuery.of(context).size.width / 6,
-                    child: TextFormField(
-                      textInputAction: TextInputAction.next,
-                      controller: num3Controller,
-                      focusNode: _focusNode3,
-                      onChanged: (String value) {
-                        if (value.isNotEmpty) {
-                          _focusNode3.unfocus();
-                          FocusScope.of(context).requestFocus(_focusNode4);
-                        }
-                      },
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      maxLength: 1,
-                      onFieldSubmitted: (value) {
-                        print(value);
-                      },
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(bottom: 5),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        focusedBorder: OutlineInputBorder(
+                  GestureDetector(
+                    onTap: () {
+                      changeHeightOfInputContainer(3);
+                    },
+                    child: Container(
+                      //color: Colors.deepPurple,
+                      height: heigthOfContainer3,
+                      width: MediaQuery.of(context).size.width / 6,
+                      child: TextFormField(
+                        textInputAction: TextInputAction.next,
+                        controller: num3Controller,
+                        focusNode: _focusNode3,
+                        onChanged: (String value) {
+                          if (value.isNotEmpty) {
+                            _focusNode3.unfocus();
+                            FocusScope.of(context).requestFocus(_focusNode4);
+                          }
+                        },
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        maxLength: 1,
+                        onFieldSubmitted: (value) {
+                          print(value);
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(bottom: 5),
+                          enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: Colors.black)),
-                        counterText: "",
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(color: Colors.black)),
+                          counterText: "",
+                        ),
                       ),
                     ),
                   ),
-                  Container(
-                    //color: Colors.deepPurple,
-                    height: 40,
-                    width: MediaQuery.of(context).size.width / 6,
-                    child: TextFormField(
-                      //textInputAction: TextInputAction.next,
-                      controller: num4Controller,
-                      focusNode: _focusNode4,
-                      onChanged: (String value) {
-                        if (value.isNotEmpty) {
-                          _focusNode4.unfocus();
-                        }
-                      },
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      maxLength: 1,
-                      onFieldSubmitted: (value) {
-                        print(value);
-                      },
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(bottom: 5),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        focusedBorder: OutlineInputBorder(
+                  GestureDetector(
+                    onTap: () {
+                      changeHeightOfInputContainer(4);
+                    },
+                    child: Container(
+                      //color: Colors.deepPurple,
+                      height: heigthOfContainer4,
+                      width: MediaQuery.of(context).size.width / 6,
+                      child: TextFormField(
+                        //textInputAction: TextInputAction.next,
+                        controller: num4Controller,
+                        focusNode: _focusNode4,
+                        onChanged: (String value) {
+                          if (value.isNotEmpty) {
+                            _focusNode4.unfocus();
+                          }
+                        },
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        maxLength: 1,
+                        onFieldSubmitted: (value) {
+                          print(value);
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(bottom: 5),
+                          enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: Colors.black)),
-                        counterText: "",
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(color: Colors.black)),
+                          counterText: "",
+                        ),
                       ),
                     ),
                   ),
@@ -537,8 +521,15 @@ class _EasyGameModeState extends State<EasyGameMode> {
                         num2Controller.text == "" ||
                         num3Controller.text == "" ||
                         num4Controller.text == "") {
-                      _handlingOfEmptyFields("You didn't input some values");
+                      _handlingOfEmptyFields("RULE 2.");
+                    } else if (isAnyNumerZeor(
+                        int.parse(num1Controller.text),
+                        int.parse(num2Controller.text),
+                        int.parse(num3Controller.text),
+                        int.parse(num4Controller.text))) {
+                      _handlingOfEmptyFields("RULE 1.");
                     }
+
                     //To be implemented maybe
                     // else if (hasTwoSameNumbers(
                     //         int.parse(num1Controller.text),
