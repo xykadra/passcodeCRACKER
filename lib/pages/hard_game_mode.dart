@@ -10,16 +10,17 @@ import "package:passcodecr/pages/game_over_page.dart";
 
 import "package:passcodecr/pages/win_page.dart";
 import "package:passcodecr/util/utilForAdditionalWidget.dart";
+import "package:passcodecr/util/utilForHardMode.dart";
 import "package:passcodecr/util/utilForMediumMode.dart";
 
-class MediumGameMode extends StatefulWidget {
-  const MediumGameMode({super.key});
+class HardGameMode extends StatefulWidget {
+  const HardGameMode({super.key});
 
   @override
-  State<MediumGameMode> createState() => _MediumGameModeState();
+  State<HardGameMode> createState() => _HardGameModeState();
 }
 
-class _MediumGameModeState extends State<MediumGameMode> {
+class _HardGameModeState extends State<HardGameMode> {
   //Lists
   List<int> inputNumbers = [];
 
@@ -43,7 +44,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
           context,
           MaterialPageRoute(
             builder: (context) => WinPage(
-              nameOfPage: "Medium",
+              nameOfPage: "Hard",
               randomNumbers: randomNumbers,
             ),
           ));
@@ -55,7 +56,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
     counterForWidgets < 9
         ? bodyElements.add(Padding(
             padding: const EdgeInsets.only(bottom: 0.0),
-            child: UtilForMediumMode(
+            child: UtilForHardMode(
               num1: num1,
               num2: num2,
               num3: num3,
@@ -375,10 +376,10 @@ class _MediumGameModeState extends State<MediumGameMode> {
                     width: 80,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: Colors.orange),
+                        color: Colors.red),
                     child: Center(
                         child: Text(
-                      'Medium',
+                      'Hard',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                     )),
@@ -688,7 +689,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
                 child: Container(
                   height: 30,
                   decoration: BoxDecoration(
-                    color: Colors.orange,
+                    color: Colors.red,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Center(
@@ -708,38 +709,38 @@ class _MediumGameModeState extends State<MediumGameMode> {
             ),
 
             //Uncomment this for debugging
-            Text(
-              "Random number: " + randomNumbers.toString(),
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold),
-            ),
-            Text(counterForWidgets.toString()),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MediumGameMode(),
-                      ));
-                },
-                child: Text("Generate new numbers")),
-            ElevatedButton(
-                onPressed: () {
-                  //Testing
-                  print("Printing numbers if they are present");
-                  print(isNumberPresent);
-                  print("Printing numbers if they are on correct  spot");
-                  print(isNumberOnCorrectSpot);
-                },
-                child: Text("See present and correct spots")),
-            ElevatedButton(
-                onPressed: () {
-                  //Testing
-                  checkIsThereRepeatingNumbers(randomNumbers);
-                },
-                child: Text("Check repeating numbers")),
+            // Text(
+            //   "Random number: " + randomNumbers.toString(),
+            //   style: TextStyle(
+            //       color: Colors.black,
+            //       fontSize: 25,
+            //       fontWeight: FontWeight.bold),
+            // ),
+            // Text(counterForWidgets.toString()),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //             builder: (context) => HardGameMode(),
+            //           ));
+            //     },
+            //     child: Text("Generate new numbers")),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       //Testing
+            //       print("Printing numbers if they are present");
+            //       print(isNumberPresent);
+            //       print("Printing numbers if they are on correct  spot");
+            //       print(isNumberOnCorrectSpot);
+            //     },
+            //     child: Text("See present and correct spots")),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       //Testing
+            //       checkIsThereRepeatingNumbers(randomNumbers);
+            //     },
+            //     child: Text("Check repeating numbers")),
 
             Spacer(),
           ],

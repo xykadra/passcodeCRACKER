@@ -10,16 +10,16 @@ import "package:passcodecr/pages/game_over_page.dart";
 
 import "package:passcodecr/pages/win_page.dart";
 import "package:passcodecr/util/utilForAdditionalWidget.dart";
-import "package:passcodecr/util/utilForMediumMode.dart";
+import "package:passcodecr/util/utilFroEasyMode.dart";
 
-class MediumGameMode extends StatefulWidget {
-  const MediumGameMode({super.key});
+class EasyPlusGameMode extends StatefulWidget {
+  const EasyPlusGameMode({super.key});
 
   @override
-  State<MediumGameMode> createState() => _MediumGameModeState();
+  State<EasyPlusGameMode> createState() => _EasyPlusGameModeState();
 }
 
-class _MediumGameModeState extends State<MediumGameMode> {
+class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
   //Lists
   List<int> inputNumbers = [];
 
@@ -30,11 +30,42 @@ class _MediumGameModeState extends State<MediumGameMode> {
   //color of text "CORRECT/NUMBERS/SPOTS"
   Color colorOfText = Colors.white;
   int counterForWidgets = 0;
-  int counterForTries = 9;
+  int counterForTries = 4;
 
   void initState() {
     super.initState();
     randomNumbers = _generateRandomNumbers();
+  }
+
+  double heigthOfContainer1 = 40;
+  double heigthOfContainer2 = 40;
+  double heigthOfContainer3 = 40;
+  double heigthOfContainer4 = 40;
+
+  void changeHeightOfInputContainer(int containerNum) {
+    if (containerNum == 1) {
+      setState(() {
+        heigthOfContainer1 = 80;
+        heigthOfContainer2 = 40;
+        heigthOfContainer3 = 40;
+        heigthOfContainer4 = 40;
+      });
+    } else if (containerNum == 2) {
+      heigthOfContainer1 = 40;
+      heigthOfContainer2 = 55;
+      heigthOfContainer3 = 30;
+      heigthOfContainer4 = 30;
+    } else if (containerNum == 3) {
+      heigthOfContainer1 = 40;
+      heigthOfContainer2 = 40;
+      heigthOfContainer3 = 40;
+      heigthOfContainer4 = 55;
+    } else if (containerNum == 4) {
+      heigthOfContainer1 = 40;
+      heigthOfContainer2 = 40;
+      heigthOfContainer3 = 40;
+      heigthOfContainer4 = 55;
+    }
   }
 
   void _chekForWin(int correctNumbers, int correctSpots) {
@@ -43,7 +74,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
           context,
           MaterialPageRoute(
             builder: (context) => WinPage(
-              nameOfPage: "Medium",
+              nameOfPage: "EasyPlus",
               randomNumbers: randomNumbers,
             ),
           ));
@@ -52,16 +83,18 @@ class _MediumGameModeState extends State<MediumGameMode> {
 
   void addBodyElements(String num1, String num2, String num3, String num4,
       int correctNumbers, int correctSpots, int counterForWidgets) {
-    counterForWidgets < 9
+    counterForWidgets < 4
         ? bodyElements.add(Padding(
-            padding: const EdgeInsets.only(bottom: 0.0),
-            child: UtilForMediumMode(
+            padding: const EdgeInsets.only(
+              bottom: 5.0,
+            ),
+            child: UtilForEasyMode(
               num1: num1,
               num2: num2,
               num3: num3,
               num4: num4,
-              correctNumbers: correctNumbers,
-              correctSpots: correctSpots,
+              isNumberOnCorrectSpot: isNumberOnCorrectSpot,
+              isNumberPresent: isNumberPresent,
             ),
           ))
         : _navigateToGameOverPage(randomNumbers);
@@ -87,7 +120,9 @@ class _MediumGameModeState extends State<MediumGameMode> {
 
     while (numbers.length < 4) {
       int num = random.nextInt(9) + 1;
-      numbers.add(num);
+      if (!numbers.contains(num)) {
+        numbers.add(num);
+      }
     }
     return numbers;
   }
@@ -109,45 +144,6 @@ class _MediumGameModeState extends State<MediumGameMode> {
   FocusNode _focusNode3 = FocusNode();
   FocusNode _focusNode4 = FocusNode();
 
-  // bool isNumber1Present = false;
-  // bool isNumber1OnCorrectSpot = false;
-
-  // bool isNumber2Present = false;
-  // bool isNumber2OnCorrectSpot = false;
-
-  // bool isNumber3Present = false;
-  // bool isNumber3OnCorrectSpot = false;
-
-  // bool isNumber4Present = false;
-  // bool isNumber4OnCorrectSpot = false;
-
-  // Map<int, int> checkNumbers(List<int> inputNumbers, List<int> randomNumbers) {
-  //   int correctNumbers = 0;
-  //   int correctSpots = 0;
-
-  //   for (int i = 0; i < inputNumbers.length; i++) {
-  //     if (randomNumbers.contains(inputNumbers[i])) {
-  //       if (i == 0) {
-  //         setState(() {
-  //           isNumber1Present = true;
-  //         });
-  //       }
-  //       if (i == 1) {
-  //         setState(() {
-  //           isNumber2Present = true;
-  //         });
-  //       }
-  //       correctNumbers++;
-  //     }
-
-  //     if (inputNumbers[i] == randomNumbers[i]) {
-  //       correctSpots++;
-  //     }
-  //   }
-
-  //   return {correctNumbers: correctSpots};
-  // }
-
   Map<int, bool> isNumberPresent = {
     0: false,
     1: false,
@@ -162,123 +158,38 @@ class _MediumGameModeState extends State<MediumGameMode> {
     3: false,
   };
 
-//Implementing logic, theat will count occurance of each number in list
-//If there is more that 0 occurance of every number that count for correct numbers does not count
-
-  int occuranceOfNumber1 = 0;
-  int occuranceOfNumber2 = 0;
-  int occuranceOfNumber3 = 0;
-  int occuranceOfNumber4 = 0;
-
-  Map<int, int> occurances = {
-    0: 0,
-    1: 0,
-    2: 0,
-    3: 0,
-  };
-
-  void incrementOccurrence(int number, Map<int, int> occurrences) {
-    // Increment the occurrence of the specified number
-    // occurrences?.update(number, (value) => value + 1, ifAbsent: () => 1);
-    //occurances[number].
-
-    occurances[number] = (occurances[number] ?? 0) + 1;
-  }
-
-  void resetOccurances(Map<int, int> list) {
-    setState(() {
-      occuranceOfNumber1 = 0;
-      occuranceOfNumber2 = 0;
-      occuranceOfNumber3 = 0;
-      occuranceOfNumber4 = 0;
-    });
-
-    list.forEach((key, value) {
-      list[key] = 0;
-    });
-  }
-
-  void addValueToOccurances(int key, int value) {
-    if (key == 0) {
-      setState(() {
-        occuranceOfNumber1 = value;
-      });
-    }
-    if (key == 1) {
-      setState(() {
-        occuranceOfNumber2 = value;
-      });
-    }
-    if (key == 2) {
-      setState(() {
-        occuranceOfNumber3 = value;
-      });
-    }
-    if (key == 3) {
-      setState(() {
-        occuranceOfNumber4 = value;
-      });
-    }
-  }
-
-  void checkIsThereRepeatingNumbers(List<int> randomNumbers) {
-    resetOccurances(occurances);
-    for (int i = 0; i < randomNumbers.length; i++) {
-      for (int j = 0; j < randomNumbers.length; j++) {
-        if (inputNumbers[i] == randomNumbers[j]) {
-          //occurance for randomNumber[i] has happened once
-          //value of occuranceNumber1 should be incremented
-          //we need to return value of number that has occured
-          //multiple times
-          incrementOccurrence(i, occurances);
-        }
-      }
-    }
-
-    //checking if there is some number that occurance has
-    //happened multiple times
-    for (int k = 0; k < 3; k++) {
-      occurances.forEach((key, value) {
-        addValueToOccurances(key, value);
-      });
-    }
-    print("Occurances:");
-    print("Occurance of Number 1: " + occuranceOfNumber1.toString());
-    print("Occurance of Number 2: " + occuranceOfNumber2.toString());
-    print("Occurance of Number 3: " + occuranceOfNumber3.toString());
-    print("Occurance of Number 4: " + occuranceOfNumber4.toString());
-  }
-
   Map<int, int> checkNumbers(List<int> inputNumbers, List<int> randomNumbers) {
     int correctNumbers = 0;
     int correctSpots = 0;
 
-//takes every number and compares to every other number from list
-//if there is more than one occurance in list it should not be counted as correctNumber
-
-//break Should Be implemented but not
-
-//If num1 have more than one occurances then correct number should be
-//if number have more occurances and correct numbers
-    // for (int i = 0; i < inputNumbers.length; i++) {
-    //   for (int j = 0; j < randomNumbers.length; j++) {
-    //     if (inputNumbers[i] == randomNumbers[j]) {
-    //       incrementOccurrence(i, occurances);
-    //     }
-    //   }
-    // }
-
     for (int i = 0; i < inputNumbers.length; i++) {
       if (randomNumbers.contains(inputNumbers[i])) {
+        setState(() {
+          isNumberPresent[i] = true;
+        });
+
         correctNumbers++;
       }
+
       if (inputNumbers[i] == randomNumbers[i]) {
+        setState(() {
+          isNumberOnCorrectSpot[i] = true;
+        });
         correctSpots++;
       }
-      // if (inputNumbers[i] == randomNumbers[i]) {
-      //   correctSpots++;
-      // }
     }
+
+    // Map<String, List<int>> result = {
+    //   'correctNumbers': isNumberPresent.entries
+    //       .where((entry) => entry.value)
+    //       .map((entry) => entry.key)
+    //       .toList(),
+    //   'correctSpots': isNumberOnCorrectSpot.entries
+    //       .where((entry) => entry.value)
+    //       .map((entry) => entry.key)
+    //       .toList(),
+    // };
+
     return {correctNumbers: correctSpots};
   }
 
@@ -306,7 +217,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
       forceActionsBelow: true,
       content: AwesomeSnackbarContent(
         color: Colors.red[350],
-        title: 'Oh Hey!!',
+        title: 'LOL',
         message: message,
         messageFontSize: 18,
 
@@ -323,8 +234,8 @@ class _MediumGameModeState extends State<MediumGameMode> {
       ..showMaterialBanner(materialBanner);
   }
 
-  bool hasTwoSameNumbers(int a, int b, int c, int d) {
-    return a == b || a == c || a == d || b == c || b == d || c == d;
+  bool isAnyNumerZeor(int a, int b, int c, int d) {
+    return a == 0 || b == 0 || c == 0 || d == 0;
   }
 
   Widget build(BuildContext context) {
@@ -375,12 +286,23 @@ class _MediumGameModeState extends State<MediumGameMode> {
                     width: 80,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: Colors.orange),
+                        color: Colors.green.withOpacity(0.93)),
                     child: Center(
-                        child: Text(
-                      'Medium',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Easy',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 10),
+                        ),
+                        Text(
+                          'Plus',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 5),
+                        ),
+                      ],
                     )),
                   ),
                 ),
@@ -395,7 +317,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
                       num3Controller.text = "";
                       num4Controller.text = "";
                       inputNumbers.clear();
-                      counterForTries = 9;
+                      counterForTries = 5;
                       counterForWidgets = 0;
                     });
                   },
@@ -411,38 +333,8 @@ class _MediumGameModeState extends State<MediumGameMode> {
                 ),
               ],
             ),
-            Spacer(),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  width: 200,
-                  padding: EdgeInsets.all(10),
-                  //color: Colors.red,
-                  child: Column(
-                    children: [
-                      Text("CORRECT",
-                          style: TextStyle(
-                              color: colorOfText,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24)),
-                     
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("  NUMBER",
-                                style: TextStyle(color: colorOfText)),
-                            Text("SPOTS", style: TextStyle(color: colorOfText)),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+            SizedBox(
+              height: 15,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -450,154 +342,176 @@ class _MediumGameModeState extends State<MediumGameMode> {
                 children: bodyElements,
               ),
             ),
+            SizedBox(
+              height: 15,
+            ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25),
+              padding: EdgeInsets.symmetric(horizontal: 60),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   //Input of numbers
-                  Container(
-                    //color: Colors.grey[200],
-                    height: 40,
-                    width: MediaQuery.of(context).size.width / 6,
-                    child: TextFormField(
-                      textInputAction: TextInputAction.next,
-                      controller: num1Controller,
-                      focusNode: _focusNode1,
-                      onChanged: (String value) {
-                        if (value.isNotEmpty) {
-                          _focusNode1.unfocus();
-                          FocusScope.of(context).requestFocus(_focusNode2);
-                        }
-                      },
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      maxLength: 1,
-                      onFieldSubmitted: (value) {
-                        print(value);
-                      },
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(bottom: 5),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        focusedBorder: OutlineInputBorder(
+                  GestureDetector(
+                    onTap: () {
+                      changeHeightOfInputContainer(1);
+                    },
+                    child: Container(
+                      //color: Colors.grey[200],
+                      height: heigthOfContainer1,
+                      width: MediaQuery.of(context).size.width / 6,
+                      child: TextFormField(
+                        textInputAction: TextInputAction.next,
+                        controller: num1Controller,
+                        focusNode: _focusNode1,
+                        onChanged: (String value) {
+                          if (value.isNotEmpty) {
+                            _focusNode1.unfocus();
+                            FocusScope.of(context).requestFocus(_focusNode2);
+                          }
+                        },
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        maxLength: 1,
+                        onFieldSubmitted: (value) {
+                          print(value);
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(bottom: 5),
+                          enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: Colors.black)),
-                        counterText: "",
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(color: Colors.black)),
+                          counterText: "",
+                        ),
                       ),
                     ),
                   ),
 
-                  Container(
-                    //color: Colors.white,
-                    height: 40,
-                    width: MediaQuery.of(context).size.width / 6,
-                    child: TextFormField(
-                      textInputAction: TextInputAction.next,
-                      controller: num2Controller,
-                      focusNode: _focusNode2,
-                      onChanged: (String value) {
-                        if (value.isNotEmpty) {
-                          _focusNode2.unfocus();
-                          FocusScope.of(context).requestFocus(_focusNode3);
-                        }
-                      },
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      maxLength: 1,
-                      onFieldSubmitted: (value) {
-                        print(value);
-                      },
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(bottom: 5),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        focusedBorder: OutlineInputBorder(
+                  GestureDetector(
+                    onTap: () {
+                      changeHeightOfInputContainer(2);
+                    },
+                    child: Container(
+                      //color: Colors.white,
+                      height: heigthOfContainer2,
+                      width: MediaQuery.of(context).size.width / 6,
+                      child: TextFormField(
+                        textInputAction: TextInputAction.next,
+                        controller: num2Controller,
+                        focusNode: _focusNode2,
+                        onChanged: (String value) {
+                          if (value.isNotEmpty) {
+                            _focusNode2.unfocus();
+                            FocusScope.of(context).requestFocus(_focusNode3);
+                          }
+                        },
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        maxLength: 1,
+                        onFieldSubmitted: (value) {
+                          print(value);
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(bottom: 5),
+                          enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: Colors.black)),
-                        counterText: "",
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(color: Colors.black)),
+                          counterText: "",
+                        ),
                       ),
                     ),
                   ),
-                  Container(
-                    //color: Colors.deepPurple,
-                    height: 40,
-                    width: MediaQuery.of(context).size.width / 6,
-                    child: TextFormField(
-                      textInputAction: TextInputAction.next,
-                      controller: num3Controller,
-                      focusNode: _focusNode3,
-                      onChanged: (String value) {
-                        if (value.isNotEmpty) {
-                          print("kurac");
-                          _focusNode3.unfocus();
-                          FocusScope.of(context).requestFocus(_focusNode4);
-                        }
-                      },
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      maxLength: 1,
-                      onFieldSubmitted: (value) {
-                        print(value);
-                      },
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(bottom: 5),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        focusedBorder: OutlineInputBorder(
+                  GestureDetector(
+                    onTap: () {
+                      changeHeightOfInputContainer(3);
+                    },
+                    child: Container(
+                      //color: Colors.deepPurple,
+                      height: heigthOfContainer3,
+                      width: MediaQuery.of(context).size.width / 6,
+                      child: TextFormField(
+                        textInputAction: TextInputAction.next,
+                        controller: num3Controller,
+                        focusNode: _focusNode3,
+                        onChanged: (String value) {
+                          if (value.isNotEmpty) {
+                            _focusNode3.unfocus();
+                            FocusScope.of(context).requestFocus(_focusNode4);
+                          }
+                        },
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        maxLength: 1,
+                        onFieldSubmitted: (value) {
+                          print(value);
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(bottom: 5),
+                          enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: Colors.black)),
-                        counterText: "",
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(color: Colors.black)),
+                          counterText: "",
+                        ),
                       ),
                     ),
                   ),
-                  Container(
-                    //color: Colors.deepPurple,
-                    height: 40,
-                    width: MediaQuery.of(context).size.width / 6,
-                    child: TextFormField(
-                      //textInputAction: TextInputAction.next,
-                      controller: num4Controller,
-                      focusNode: _focusNode4,
-                      onChanged: (String value) {
-                        if (value.isNotEmpty) {
-                          _focusNode4.unfocus();
-                        }
-                      },
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      maxLength: 1,
-                      onFieldSubmitted: (value) {
-                        print(value);
-                      },
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(bottom: 5),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        focusedBorder: OutlineInputBorder(
+                  GestureDetector(
+                    onTap: () {
+                      changeHeightOfInputContainer(4);
+                    },
+                    child: Container(
+                      //color: Colors.deepPurple,
+                      height: heigthOfContainer4,
+                      width: MediaQuery.of(context).size.width / 6,
+                      child: TextFormField(
+                        //textInputAction: TextInputAction.next,
+                        controller: num4Controller,
+                        focusNode: _focusNode4,
+                        onChanged: (String value) {
+                          if (value.isNotEmpty) {
+                            _focusNode4.unfocus();
+                          }
+                        },
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        maxLength: 1,
+                        onFieldSubmitted: (value) {
+                          print(value);
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(bottom: 5),
+                          enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: Colors.black)),
-                        counterText: "",
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(color: Colors.black)),
+                          counterText: "",
+                        ),
                       ),
                     ),
                   ),
@@ -619,8 +533,15 @@ class _MediumGameModeState extends State<MediumGameMode> {
                         num2Controller.text == "" ||
                         num3Controller.text == "" ||
                         num4Controller.text == "") {
-                      _handlingOfEmptyFields("You didn't input some values");
+                      _handlingOfEmptyFields("RULE 2.");
+                    } else if (isAnyNumerZeor(
+                        int.parse(num1Controller.text),
+                        int.parse(num2Controller.text),
+                        int.parse(num3Controller.text),
+                        int.parse(num4Controller.text))) {
+                      _handlingOfEmptyFields("RULE 1.");
                     }
+
                     //To be implemented maybe
                     // else if (hasTwoSameNumbers(
                     //         int.parse(num1Controller.text),
@@ -688,7 +609,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
                 child: Container(
                   height: 30,
                   decoration: BoxDecoration(
-                    color: Colors.orange,
+                    color: Colors.green,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Center(
@@ -708,40 +629,32 @@ class _MediumGameModeState extends State<MediumGameMode> {
             ),
 
             //Uncomment this for debugging
-            Text(
-              "Random number: " + randomNumbers.toString(),
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold),
-            ),
-            Text(counterForWidgets.toString()),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MediumGameMode(),
-                      ));
-                },
-                child: Text("Generate new numbers")),
-            ElevatedButton(
-                onPressed: () {
-                  //Testing
-                  print("Printing numbers if they are present");
-                  print(isNumberPresent);
-                  print("Printing numbers if they are on correct  spot");
-                  print(isNumberOnCorrectSpot);
-                },
-                child: Text("See present and correct spots")),
-            ElevatedButton(
-                onPressed: () {
-                  //Testing
-                  checkIsThereRepeatingNumbers(randomNumbers);
-                },
-                child: Text("Check repeating numbers")),
-
-            Spacer(),
+            // Text(
+            //   "Random number: " + randomNumbers.toString(),
+            //   style: TextStyle(
+            //       color: Colors.black,
+            //       fontSize: 25,
+            //       fontWeight: FontWeight.bold),
+            // ),
+            // Text(counterForWidgets.toString()),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //             builder: (context) => EasyPlusGameMode(),
+            //           ));
+            //     },
+            //     child: Text("Generate new numbers")),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       //Testing
+            //       print("Printing numbers if they are present");
+            //       print(isNumberPresent);
+            //       print("Printing numbers if they are on correct  spot");
+            //       print(isNumberOnCorrectSpot);
+            //     },
+            //     child: Text("See present and correct spots"))
           ],
         ),
       )),

@@ -74,6 +74,7 @@ class _EasyGameModeState extends State<EasyGameMode> {
           context,
           MaterialPageRoute(
             builder: (context) => WinPage(
+              nameOfPage: "Easy",
               randomNumbers: randomNumbers,
             ),
           ));

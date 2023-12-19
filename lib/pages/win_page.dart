@@ -3,13 +3,37 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:passcodecr/pages/easy_game_mode.dart';
+import 'package:passcodecr/pages/easy_plus.dart';
+import 'package:passcodecr/pages/medium_game_mode.dart';
 
 class WinPage extends StatelessWidget {
   final List<int> randomNumbers;
+  final String nameOfPage;
 
   WinPage({
     required this.randomNumbers,
+    required this.nameOfPage,
   });
+
+  String nameOfBackPage = "";
+  void checkBackName(String nameOfPage) {
+    if (nameOfPage == "Easy") {
+      nameOfBackPage = "Easy";
+    }
+    if (nameOfPage == "EasyPlus") {
+      nameOfBackPage = "😀";
+    }
+    if (nameOfPage == "Medium") {
+      nameOfBackPage = "Medium";
+    }
+    if (nameOfPage == "Hard") {
+      nameOfBackPage = "Hard";
+    }
+  }
+
+  initState() {
+    checkBackName(nameOfPage);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,34 +47,38 @@ class WinPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "YOU WON!!!",
+              nameOfBackPage,
               style: GoogleFonts.sourceCodePro(
                   fontSize: 40, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 15,
             ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-              ),
-              child: Center(
-                child: Column(
-                  children: [
-                    Text(
-                      "YESS, YOUR NUMBERS WERE",
-                      style: GoogleFonts.inter(fontSize: 25),
-                    ),
-                    Text(
-                      randomNumbers
-                          .toString()
-                          .replaceAll('[', '')
-                          .replaceAll(']', '')
-                          .replaceAll(',', ""),
-                      style: GoogleFonts.inter(
-                          fontSize: 32, fontWeight: FontWeight.normal),
-                    ),
-                  ],
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        "YESS, YOUR NUMBERS WERE",
+                        style: GoogleFonts.inter(fontSize: 20),
+                      ),
+                      Text(
+                        randomNumbers
+                            .toString()
+                            .replaceAll('[', '')
+                            .replaceAll(']', '')
+                            .replaceAll(',', ""),
+                        style: GoogleFonts.inter(
+                            fontSize: 32, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -59,52 +87,71 @@ class WinPage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EasyGameMode(),
-                    ));
+                if (nameOfPage == "Easy") {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EasyGameMode(),
+                      ));
+                }
+                if (nameOfPage == "EasyPlus") {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EasyPlusGameMode(),
+                      ));
+                }
+                if (nameOfPage == "Medium") {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MediumGameMode(),
+                      ));
+                }
               },
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 50.0),
                 child: Container(
-                  height: 50,
+                  height: 80,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(0),
+                      borderRadius: BorderRadius.circular(12),
                       color: Colors.blue),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Play again",
-                        style: GoogleFonts.inter(
-                            color: Colors.black,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Icon(
-                        Icons.loop,
-                        size: 30,
-                      )
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          "Play again",
+                          style: GoogleFonts.inter(
+                              color: Colors.black,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Icon(
+                          Icons.loop,
+                          size: 40,
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Total wins today: SOON",
-                  style: GoogleFonts.sourceCodePro(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  "Best time: SOON",
-                  style: GoogleFonts.sourceCodePro(fontWeight: FontWeight.bold),
-                )
-              ],
-            )
+            // Column(
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     Text(
+            //       "Total wins today: SOON",
+            //       style: GoogleFonts.sourceCodePro(fontWeight: FontWeight.bold),
+            //     ),
+            //     Text(
+            //       "Best time: SOON",
+            //       style: GoogleFonts.sourceCodePro(fontWeight: FontWeight.bold),
+            //     )
+            //   ],
+            // )
           ],
         )),
       ),
