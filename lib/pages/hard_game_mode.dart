@@ -31,7 +31,7 @@ class _HardGameModeState extends State<HardGameMode> {
   //color of text "CORRECT/NUMBERS/SPOTS"
   Color colorOfText = Colors.white;
   int counterForWidgets = 0;
-  int counterForTries = 9;
+  int counterForTries = 6;
 
   void initState() {
     super.initState();
@@ -53,7 +53,7 @@ class _HardGameModeState extends State<HardGameMode> {
 
   void addBodyElements(String num1, String num2, String num3, String num4,
       int correctNumbers, int correctSpots, int counterForWidgets) {
-    counterForWidgets < 9
+    counterForWidgets < 6
         ? bodyElements.add(Padding(
             padding: const EdgeInsets.only(bottom: 0.0),
             child: UtilForHardMode(
@@ -396,7 +396,7 @@ class _HardGameModeState extends State<HardGameMode> {
                       num3Controller.text = "";
                       num4Controller.text = "";
                       inputNumbers.clear();
-                      counterForTries = 9;
+                      counterForTries = 6;
                       counterForWidgets = 0;
                     });
                   },

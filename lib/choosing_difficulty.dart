@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:passcodecr/pages/easy_game_mode.dart';
 import 'package:passcodecr/pages/easy_plus.dart';
+import 'package:passcodecr/pages/extreme_game_mode.dart';
 import 'package:passcodecr/pages/hard_game_mode.dart';
 import 'package:passcodecr/pages/medium_game_mode.dart';
 
@@ -24,6 +25,12 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Spacer(flex: 2,),
+              Text(
+                "PasscodeCRACKER",
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              ),
+              Spacer(),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -101,7 +108,6 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
                   padding: EdgeInsets.all(8),
                   height: 60,
                   decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(12),
                       color: Colors.orange),
                   child: Center(
@@ -115,27 +121,75 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
                 height: 10,
               ),
               GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => HardGameMode(),
-                          fullscreenDialog: true));
-                },
-                child: Container(
-                  padding: EdgeInsets.all(8),
-                  height: 60,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black),
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.red),
-                  child: Center(
-                      child: Text(
-                    'Hard',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                  )),
-                ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HardGameMode(),
+                            fullscreenDialog: true));
+                  },
+                  child: Stack(children: [
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      height: 60,
+                      decoration: BoxDecoration(
+                          //border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.red.withOpacity(0.5)),
+                      child: Center(
+                          child: Text(
+                        'Hard',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                            color: Colors.black),
+                      )),
+                    ),
+                    Positioned(
+                        top: 8,
+                        right: 8,
+                        child: Icon(
+                          Icons.lock,
+                          color: Colors.white,
+                        ))
+                  ])),
+              SizedBox(
+                height: 10,
               ),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ExtremeGameMode(),
+                            fullscreenDialog: true));
+                  },
+                  child: Stack(children: [
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      height: 60,
+                      decoration: BoxDecoration(
+                          //border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.purple.withOpacity(0.4)),
+                      child: Center(
+                          child: Text(
+                        'Extreme',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                            color: Colors.white),
+                      )),
+                    ),
+                    Positioned(
+                        top: 8,
+                        right: 8,
+                        child: Icon(
+                          Icons.lock,
+                          color: Colors.white,
+                        ))
+                  ])),
+              Spacer(flex: 2,),
             ],
           ),
         ),

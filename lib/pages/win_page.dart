@@ -4,6 +4,7 @@ import 'package:lottie/lottie.dart';
 
 import 'package:passcodecr/pages/easy_game_mode.dart';
 import 'package:passcodecr/pages/easy_plus.dart';
+import 'package:passcodecr/pages/extreme_game_mode.dart';
 import 'package:passcodecr/pages/medium_game_mode.dart';
 
 class WinPage extends StatelessWidget {
@@ -28,6 +29,9 @@ class WinPage extends StatelessWidget {
     }
     if (nameOfPage == "Hard") {
       nameOfBackPage = "Hard";
+    }
+     if (nameOfPage == "Extreme") {
+      nameOfBackPage = "Extreme";
     }
   }
 
@@ -106,6 +110,13 @@ class WinPage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => MediumGameMode(),
+                      ));
+                }
+                if (nameOfPage == "Extreme") {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ExtremeGameMode(),
                       ));
                 }
               },

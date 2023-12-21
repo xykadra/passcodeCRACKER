@@ -6,20 +6,22 @@ import "package:awesome_snackbar_content/awesome_snackbar_content.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:passcodecr/choosing_difficulty.dart";
+import "package:passcodecr/components/countdownTimer.dart";
 import "package:passcodecr/pages/game_over_page.dart";
 
 import "package:passcodecr/pages/win_page.dart";
 import "package:passcodecr/util/utilForAdditionalWidget.dart";
+import "package:passcodecr/util/utilForHardMode.dart";
 import "package:passcodecr/util/utilForMediumMode.dart";
 
-class MediumGameMode extends StatefulWidget {
-  const MediumGameMode({super.key});
+class ExtremeGameMode extends StatefulWidget {
+  const ExtremeGameMode({super.key});
 
   @override
-  State<MediumGameMode> createState() => _MediumGameModeState();
+  State<ExtremeGameMode> createState() => _ExtremeGameModeState();
 }
 
-class _MediumGameModeState extends State<MediumGameMode> {
+class _ExtremeGameModeState extends State<ExtremeGameMode> {
   //Lists
   List<int> inputNumbers = [];
 
@@ -30,7 +32,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
   //color of text "CORRECT/NUMBERS/SPOTS"
   Color colorOfText = Colors.white;
   int counterForWidgets = 0;
-  int counterForTries = 7;
+  int counterForTries = 6;
 
   void initState() {
     super.initState();
@@ -43,7 +45,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
           context,
           MaterialPageRoute(
             builder: (context) => WinPage(
-              nameOfPage: "Medium",
+              nameOfPage: "Extreme",
               randomNumbers: randomNumbers,
             ),
           ));
@@ -52,10 +54,10 @@ class _MediumGameModeState extends State<MediumGameMode> {
 
   void addBodyElements(String num1, String num2, String num3, String num4,
       int correctNumbers, int correctSpots, int counterForWidgets) {
-    counterForWidgets < 7
+    counterForWidgets < 6
         ? bodyElements.add(Padding(
             padding: const EdgeInsets.only(bottom: 0.0),
-            child: UtilForMediumMode(
+            child: UtilForHardMode(
               num1: num1,
               num2: num2,
               num3: num3,
@@ -87,13 +89,8 @@ class _MediumGameModeState extends State<MediumGameMode> {
 
     while (numbers.length < 4) {
       int num = random.nextInt(9) + 1;
-
-      // Check if the number is not already in the list
-      if (!numbers.contains(num)) {
-        numbers.add(num);
-      }
+      numbers.add(num);
     }
-
     return numbers;
   }
 
@@ -380,12 +377,12 @@ class _MediumGameModeState extends State<MediumGameMode> {
                     width: 80,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: Colors.orange),
+                        color: Colors.deepPurple),
                     child: Center(
                         child: Text(
-                      'Medium',
+                      'Hard',
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.white),
                     )),
                   ),
                 ),
@@ -400,7 +397,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
                       num3Controller.text = "";
                       num4Controller.text = "";
                       inputNumbers.clear();
-                      counterForTries = 7;
+                      counterForTries = 6;
                       counterForWidgets = 0;
                     });
                   },
@@ -416,6 +413,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
                 ),
               ],
             ),
+            CountdownTimer(),
             Spacer(),
 
             Row(
@@ -432,6 +430,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
                               color: colorOfText,
                               fontWeight: FontWeight.bold,
                               fontSize: 24)),
+                     
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Row(
@@ -692,7 +691,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
                 child: Container(
                   height: 30,
                   decoration: BoxDecoration(
-                    color: Colors.orange,
+                    color: Colors.deepPurple,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Center(
@@ -725,7 +724,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
             //       Navigator.push(
             //           context,
             //           MaterialPageRoute(
-            //             builder: (context) => MediumGameMode(),
+            //             builder: (context) => ExtremeGameMode(),
             //           ));
             //     },
             //     child: Text("Generate new numbers")),

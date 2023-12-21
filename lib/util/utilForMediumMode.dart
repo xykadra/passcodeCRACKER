@@ -41,7 +41,7 @@ class _UtilForMediumModeState extends State<UtilForMediumMode> {
                   border: Border.all(color: Colors.white)),
             ),
             Positioned(
-              left: 30,
+              left: 20,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
