@@ -289,8 +289,8 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
                         color: Colors.green.withOpacity(0.93)),
                     child: Center(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
                           'Easy',
@@ -342,9 +342,7 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
                 children: bodyElements,
               ),
             ),
-            SizedBox(
-              height: 15,
-            ),
+            Spacer(),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 60),
               child: Row(
@@ -624,9 +622,7 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
+            Spacer(),
 
             //Uncomment this for debugging
             // Text(
@@ -694,6 +690,50 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
               title: Text("How to play PASSCODE CRACKER?"),
               content: Column(
                 children: [
+                       Container(
+                    height: 100,
+                    width: 200,
+                    decoration: BoxDecoration(
+                        color: Colors.green.withOpacity(0.93),
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Center(
+                      child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Easy',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 32),
+                        ),
+                        Text(
+                          'Plus',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15),
+                        ),
+                      ],
+                    )
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: 40,
+                    width: 120,
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Center(
+                      child: Text(
+                        "4 tries",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ),
+                    ),
+                  ),
                   Text(
                     "In the input fields enter numbers in range 1 to 9, and try to crack code!",
                     style: GoogleFonts.sourceCodePro(

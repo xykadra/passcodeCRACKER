@@ -12,7 +12,7 @@ class UtilForMediumMode extends StatefulWidget {
   UtilForMediumMode({
     required this.num1,
     required this.num2,
-    required this.num3,
+  required this.num3, 
     required this.num4,
     required this.correctNumbers,
     required this.correctSpots,

@@ -416,7 +416,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
                 ),
               ],
             ),
-            Spacer(),
+           // Spacer(),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -454,6 +454,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
                 children: bodyElements,
               ),
             ),
+            Spacer(),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25),
               child: Row(
@@ -543,7 +544,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
                       focusNode: _focusNode3,
                       onChanged: (String value) {
                         if (value.isNotEmpty) {
-                          print("kurac");
+                          //print("kurac");
                           _focusNode3.unfocus();
                           FocusScope.of(context).requestFocus(_focusNode4);
                         }
@@ -785,6 +786,41 @@ class _MediumGameModeState extends State<MediumGameMode> {
               title: Text("How to play PASSCODE CRACKER?"),
               content: Column(
                 children: [
+                       Container(
+                    height: 100,
+                    width: 200,
+                    decoration: BoxDecoration(
+                        color: Colors.orange.withOpacity(0.93),
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Center(
+                      child: Text(
+                        "Medium",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 32),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: 40,
+                    width: 120,
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Center(
+                      child: Text(
+                        "7 tries",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ),
+                    ),
+                  ),
                   Text(
                     "In the input fields enter numbers in range 1 to 9, and try to crack code!",
                     style: GoogleFonts.sourceCodePro(

@@ -331,9 +331,8 @@ class _EasyGameModeState extends State<EasyGameMode> {
                 children: bodyElements,
               ),
             ),
-            SizedBox(
-              height: 15,
-            ),
+            Spacer(),
+
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 60),
               child: Row(
@@ -613,9 +612,7 @@ class _EasyGameModeState extends State<EasyGameMode> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
+            Spacer(),
 
             //Uncomment this for debugging
             // Text(
@@ -683,6 +680,41 @@ class _EasyGameModeState extends State<EasyGameMode> {
               title: Text("How to play PASSCODE CRACKER?"),
               content: Column(
                 children: [
+                  Container(
+                    height: 100,
+                    width: 200,
+                    decoration: BoxDecoration(
+                        color: Colors.green.withOpacity(0.93),
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Center(
+                      child: Text(
+                        "Easy",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 32),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: 40,
+                    width: 120,
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Center(
+                      child: Text(
+                        "5 tries",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ),
+                    ),
+                  ),
                   Text(
                     "In the input fields enter numbers in range 1 to 9, and try to crack code!",
                     style: GoogleFonts.sourceCodePro(
