@@ -9,8 +9,10 @@ import "package:passcodecr/choosing_difficulty.dart";
 import "package:passcodecr/pages/game_over_page.dart";
 
 import "package:passcodecr/pages/win_page.dart";
+import "package:passcodecr/stateManagement/wins_state.dart";
 import "package:passcodecr/util/utilForAdditionalWidget.dart";
 import "package:passcodecr/util/utilForMediumMode.dart";
+import "package:shared_preferences/shared_preferences.dart";
 
 class MediumGameMode extends StatefulWidget {
   const MediumGameMode({super.key});
@@ -39,6 +41,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
 
   void _chekForWin(int correctNumbers, int correctSpots) {
     if (correctNumbers == 4 && correctSpots == 4) {
+      WinsState.incrementMediumWins();
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -332,6 +335,8 @@ class _MediumGameModeState extends State<MediumGameMode> {
     return a == b || a == c || a == d || b == c || b == d || c == d;
   }
 
+  
+
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
@@ -416,7 +421,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
                 ),
               ],
             ),
-           // Spacer(),
+            // Spacer(),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -713,13 +718,13 @@ class _MediumGameModeState extends State<MediumGameMode> {
             ),
 
             //Uncomment this for debugging
-            // Text(
-            //   "Random number: " + randomNumbers.toString(),
-            //   style: TextStyle(
-            //       color: Colors.black,
-            //       fontSize: 25,
-            //       fontWeight: FontWeight.bold),
-            // ),
+            Text(
+              "Random number: " + randomNumbers.toString(),
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold),
+            ),
             // Text(counterForWidgets.toString()),
             // ElevatedButton(
             //     onPressed: () {
@@ -786,7 +791,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
               title: Text("How to play PASSCODE CRACKER?"),
               content: Column(
                 children: [
-                       Container(
+                  Container(
                     height: 100,
                     width: 200,
                     decoration: BoxDecoration(

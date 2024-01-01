@@ -9,6 +9,7 @@ import "package:passcodecr/choosing_difficulty.dart";
 import "package:passcodecr/pages/game_over_page.dart";
 
 import "package:passcodecr/pages/win_page.dart";
+import "package:passcodecr/stateManagement/wins_state.dart";
 import "package:passcodecr/util/utilForAdditionalWidget.dart";
 import "package:passcodecr/util/utilForHardMode.dart";
 import "package:passcodecr/util/utilForMediumMode.dart";
@@ -40,6 +41,7 @@ class _HardGameModeState extends State<HardGameMode> {
 
   void _chekForWin(int correctNumbers, int correctSpots) {
     if (correctNumbers == 4 && correctSpots == 4) {
+      WinsState.incrementHardWins();
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -428,7 +430,6 @@ class _HardGameModeState extends State<HardGameMode> {
                               color: colorOfText,
                               fontWeight: FontWeight.bold,
                               fontSize: 24)),
-                     
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Row(
@@ -450,6 +451,9 @@ class _HardGameModeState extends State<HardGameMode> {
               child: Column(
                 children: bodyElements,
               ),
+            ),
+            SizedBox(
+              height: 5,
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25),
@@ -709,13 +713,13 @@ class _HardGameModeState extends State<HardGameMode> {
             ),
 
             //Uncomment this for debugging
-            // Text(
-            //   "Random number: " + randomNumbers.toString(),
-            //   style: TextStyle(
-            //       color: Colors.black,
-            //       fontSize: 25,
-            //       fontWeight: FontWeight.bold),
-            // ),
+            Text(
+              "Random number: " + randomNumbers.toString(),
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold),
+            ),
             // Text(counterForWidgets.toString()),
             // ElevatedButton(
             //     onPressed: () {
