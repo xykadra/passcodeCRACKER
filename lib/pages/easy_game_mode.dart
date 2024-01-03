@@ -5,6 +5,7 @@ import "package:audioplayers/audioplayers.dart";
 import "package:awesome_snackbar_content/awesome_snackbar_content.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:passcodecr/Win/GameOver/win_page2.dart";
 import "package:passcodecr/choosing_difficulty.dart";
 import "package:passcodecr/pages/game_over_page.dart";
 
@@ -20,6 +21,7 @@ class EasyGameMode extends StatefulWidget {
 }
 
 class _EasyGameModeState extends State<EasyGameMode> {
+
   //Lists
   List<int> inputNumbers = [];
 
@@ -31,10 +33,11 @@ class _EasyGameModeState extends State<EasyGameMode> {
   Color colorOfText = Colors.white;
   int counterForWidgets = 0;
   int counterForTries = 5;
-
+  int numberOfTries = 0;
   void initState() {
     super.initState();
     randomNumbers = _generateRandomNumbers();
+    numberOfTries = 0;
   }
 
   double heigthOfContainer1 = 40;
@@ -73,9 +76,11 @@ class _EasyGameModeState extends State<EasyGameMode> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WinPage(
+            builder: (context) => WinPage2(
               nameOfPage: "Easy",
               randomNumbers: randomNumbers,
+              tries: bodyElements,
+              numerOfTries: numberOfTries,
             ),
           ));
     }
@@ -106,6 +111,7 @@ class _EasyGameModeState extends State<EasyGameMode> {
           context,
           MaterialPageRoute(
             builder: (context) => GameOverPage(
+              nameOfPage: "Easy",
               randomNumbers: randomNumbers,
             ),
           ));
@@ -179,17 +185,6 @@ class _EasyGameModeState extends State<EasyGameMode> {
       }
     }
 
-    // Map<String, List<int>> result = {
-    //   'correctNumbers': isNumberPresent.entries
-    //       .where((entry) => entry.value)
-    //       .map((entry) => entry.key)
-    //       .toList(),
-    //   'correctSpots': isNumberOnCorrectSpot.entries
-    //       .where((entry) => entry.value)
-    //       .map((entry) => entry.key)
-    //       .toList(),
-    // };
-
     return {correctNumbers: correctSpots};
   }
 
@@ -200,12 +195,11 @@ class _EasyGameModeState extends State<EasyGameMode> {
   }
 
   void _checkForSpotSound(int rightSpots) {
+    print("sound");
+
     if (rightSpots > 0) {
       //play sound
-
-      setState(() {
-        AudioPlayer().play(AssetSource("right_spot.mp3"), volume: 20);
-      });
+      AudioPlayer().play(AssetSource("right_spot_sound.mp3"), volume: 20);
     }
   }
 
@@ -216,7 +210,7 @@ class _EasyGameModeState extends State<EasyGameMode> {
       backgroundColor: Colors.transparent,
       forceActionsBelow: true,
       content: AwesomeSnackbarContent(
-        color: Colors.red[350],
+        color: Colors.black,
         title: 'LOL',
         message: message,
         messageFontSize: 18,
@@ -559,6 +553,7 @@ class _EasyGameModeState extends State<EasyGameMode> {
                       //counter for widgets
                       counterForWidgets++;
                       counterForTries--;
+                      numberOfTries++;
 
                       //making visiable correct numbers and correct spots
                       colorOfText = Colors.black;
@@ -671,10 +666,6 @@ class _EasyGameModeState extends State<EasyGameMode> {
                     )),
                   ),
                 ),
-                Text(
-                  "Dev. Mirza Kadrić v01.0 2023",
-                  style: GoogleFonts.sourceCodePro(fontSize: 12),
-                ),
               ],
               icon: Icon(Icons.error),
               title: Text("How to play PASSCODE CRACKER?"),
@@ -714,6 +705,9 @@ class _EasyGameModeState extends State<EasyGameMode> {
                             fontSize: 18),
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                   Text(
                     "In the input fields enter numbers in range 1 to 9, and try to crack code!",

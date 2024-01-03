@@ -5,6 +5,7 @@ import "package:audioplayers/audioplayers.dart";
 import "package:awesome_snackbar_content/awesome_snackbar_content.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:passcodecr/Win/GameOver/win_page2.dart";
 import "package:passcodecr/choosing_difficulty.dart";
 import "package:passcodecr/pages/game_over_page.dart";
 
@@ -32,11 +33,13 @@ class _HardGameModeState extends State<HardGameMode> {
   //color of text "CORRECT/NUMBERS/SPOTS"
   Color colorOfText = Colors.white;
   int counterForWidgets = 0;
-  int counterForTries = 6;
+  int counterForTries = 8;
+  int numberOfTries = 0;
 
   void initState() {
     super.initState();
     randomNumbers = _generateRandomNumbers();
+    numberOfTries = 0;
   }
 
   void _chekForWin(int correctNumbers, int correctSpots) {
@@ -45,9 +48,11 @@ class _HardGameModeState extends State<HardGameMode> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WinPage(
+            builder: (context) => WinPage2(
               nameOfPage: "Hard",
               randomNumbers: randomNumbers,
+              tries: bodyElements,
+              numerOfTries: numberOfTries,
             ),
           ));
     }
@@ -55,7 +60,7 @@ class _HardGameModeState extends State<HardGameMode> {
 
   void addBodyElements(String num1, String num2, String num3, String num4,
       int correctNumbers, int correctSpots, int counterForWidgets) {
-    counterForWidgets < 6
+    counterForWidgets < 8
         ? bodyElements.add(Padding(
             padding: const EdgeInsets.only(bottom: 0.0),
             child: UtilForHardMode(
@@ -77,6 +82,7 @@ class _HardGameModeState extends State<HardGameMode> {
           MaterialPageRoute(
             builder: (context) => GameOverPage(
               randomNumbers: randomNumbers,
+              nameOfPage: "Hard",
             ),
           ));
     });
@@ -263,13 +269,6 @@ class _HardGameModeState extends State<HardGameMode> {
 
 //If num1 have more than one occurances then correct number should be
 //if number have more occurances and correct numbers
-    // for (int i = 0; i < inputNumbers.length; i++) {
-    //   for (int j = 0; j < randomNumbers.length; j++) {
-    //     if (inputNumbers[i] == randomNumbers[j]) {
-    //       incrementOccurrence(i, occurances);
-    //     }
-    //   }
-    // }
 
     for (int i = 0; i < inputNumbers.length; i++) {
       if (randomNumbers.contains(inputNumbers[i])) {
@@ -328,6 +327,10 @@ class _HardGameModeState extends State<HardGameMode> {
 
   bool hasTwoSameNumbers(int a, int b, int c, int d) {
     return a == b || a == c || a == d || b == c || b == d || c == d;
+  }
+
+  bool isAnyNumerZeor(int a, int b, int c, int d) {
+    return a == 0 || b == 0 || c == 0 || d == 0;
   }
 
   Widget build(BuildContext context) {
@@ -398,7 +401,7 @@ class _HardGameModeState extends State<HardGameMode> {
                       num3Controller.text = "";
                       num4Controller.text = "";
                       inputNumbers.clear();
-                      counterForTries = 6;
+                      counterForTries = 8;
                       counterForWidgets = 0;
                     });
                   },
@@ -625,6 +628,12 @@ class _HardGameModeState extends State<HardGameMode> {
                         num3Controller.text == "" ||
                         num4Controller.text == "") {
                       _handlingOfEmptyFields("You didn't input some values");
+                    } else if (isAnyNumerZeor(
+                        int.parse(num1Controller.text),
+                        int.parse(num2Controller.text),
+                        int.parse(num3Controller.text),
+                        int.parse(num4Controller.text))) {
+                      _handlingOfEmptyFields("RULE 1.");
                     }
                     //To be implemented maybe
                     // else if (hasTwoSameNumbers(
@@ -655,7 +664,7 @@ class _HardGameModeState extends State<HardGameMode> {
                       //counter for widgets
                       counterForWidgets++;
                       counterForTries--;
-
+                      numberOfTries++;
                       //making visiable correct numbers and correct spots
                       colorOfText = Colors.black;
 
@@ -777,15 +786,81 @@ class _HardGameModeState extends State<HardGameMode> {
                     )),
                   ),
                 ),
-                Text(
-                  "Dev. Mirza Kadrić v01.0 2023",
-                  style: GoogleFonts.sourceCodePro(fontSize: 12),
-                ),
               ],
               icon: Icon(Icons.error),
               title: Text("How to play PASSCODE CRACKER?"),
               content: Column(
                 children: [
+                  Stack(children: [
+                    Container(
+                      padding: EdgeInsets.all(15),
+                      child: Container(
+                        height: 100,
+                        width: 200,
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(12)),
+                        child: Center(
+                          child: Text(
+                            "Hard",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 32),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                        top: 0,
+                        right: 3,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.black,
+                          ),
+                          padding: EdgeInsets.all(5),
+                          child: Row(
+                            children: [
+                              Text(
+                                "+",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                " repeating numbers",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ))
+                  ]),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: 40,
+                    width: 120,
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Center(
+                      child: Text(
+                        "8 tries",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Text(
                     "In the input fields enter numbers in range 1 to 9, and try to crack code!",
                     style: GoogleFonts.sourceCodePro(

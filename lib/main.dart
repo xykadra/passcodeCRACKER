@@ -2,7 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:passcodecr/choosing_difficulty.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  // Check if total_medium_wins exists, otherwise set it to 0
+  int initialMediumWins = prefs.getInt("total_medium_wins") ?? 0;
+  await prefs.setInt("total_medium_wins", initialMediumWins);
+
+  // Check if total_hard_wins exists, otherwise set it to 0
+  int initialHardWins = prefs.getInt("total_hard_wins") ?? 0;
+  await prefs.setInt("total_hard_wins", initialHardWins);
+
   runApp(const MyApp());
 }
 

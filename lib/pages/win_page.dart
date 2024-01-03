@@ -11,10 +11,12 @@ import 'package:passcodecr/pages/medium_game_mode.dart';
 class WinPage extends StatelessWidget {
   final List<int> randomNumbers;
   final String nameOfPage;
+  final List<Widget> tries;
 
   WinPage({
     required this.randomNumbers,
     required this.nameOfPage,
+    required this.tries,
   });
 
   String nameOfBackPage = "";
@@ -23,7 +25,7 @@ class WinPage extends StatelessWidget {
       nameOfBackPage = "Easy";
     }
     if (nameOfPage == "EasyPlus") {
-      nameOfBackPage = "😀";
+      nameOfBackPage = "EasyPlus";
     }
     if (nameOfPage == "Medium") {
       nameOfBackPage = "Medium";
@@ -60,6 +62,12 @@ class WinPage extends StatelessWidget {
               height: 15,
             ),
             Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                children: tries,
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.all(18.0),
               child: Container(
                 padding: EdgeInsets.all(10),
@@ -87,9 +95,11 @@ class WinPage extends StatelessWidget {
                 ),
               ),
             ),
+
             Lottie.asset(
               "lib/assets/win.json",
             ),
+
             GestureDetector(
               onTap: () {
                 if (nameOfPage == "Easy") {

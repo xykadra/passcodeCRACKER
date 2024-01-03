@@ -5,6 +5,7 @@ import "package:audioplayers/audioplayers.dart";
 import "package:awesome_snackbar_content/awesome_snackbar_content.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:passcodecr/Win/GameOver/win_page2.dart";
 import "package:passcodecr/choosing_difficulty.dart";
 import "package:passcodecr/pages/game_over_page.dart";
 
@@ -24,19 +25,22 @@ class MediumGameMode extends StatefulWidget {
 class _MediumGameModeState extends State<MediumGameMode> {
   //Lists
   List<int> inputNumbers = [];
-
-  List<Widget> bodyElements = [];
-  List<int> numbers = [];
   List<int> randomNumbers = [];
+
+  //Correct numbers and spots widgets
+  List<Widget> bodyElements = [];
 
   //color of text "CORRECT/NUMBERS/SPOTS"
   Color colorOfText = Colors.white;
   int counterForWidgets = 0;
   int counterForTries = 7;
 
+  int numberOfTries = 0;
+
   void initState() {
     super.initState();
     randomNumbers = _generateRandomNumbers();
+    numberOfTries = 0;
   }
 
   void _chekForWin(int correctNumbers, int correctSpots) {
@@ -45,9 +49,11 @@ class _MediumGameModeState extends State<MediumGameMode> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WinPage(
+            builder: (context) => WinPage2(
               nameOfPage: "Medium",
               randomNumbers: randomNumbers,
+              tries: bodyElements,
+              numerOfTries: numberOfTries,
             ),
           ));
     }
@@ -77,6 +83,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
           MaterialPageRoute(
             builder: (context) => GameOverPage(
               randomNumbers: randomNumbers,
+              nameOfPage: "Medium",
             ),
           ));
     });
@@ -301,7 +308,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
       //play sound
 
       setState(() {
-        AudioPlayer().play(AssetSource("right_spot.mp3"), volume: 20);
+        AudioPlayer().play(AssetSource("right_spot_sound.mp3"), volume: 20);
       });
     }
   }
@@ -335,7 +342,9 @@ class _MediumGameModeState extends State<MediumGameMode> {
     return a == b || a == c || a == d || b == c || b == d || c == d;
   }
 
-  
+  bool isAnyNumerZeor(int a, int b, int c, int d) {
+    return a == 0 || b == 0 || c == 0 || d == 0;
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -461,7 +470,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
             ),
             Spacer(),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25),
+              padding: EdgeInsets.symmetric(horizontal: 60),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -629,7 +638,13 @@ class _MediumGameModeState extends State<MediumGameMode> {
                         num2Controller.text == "" ||
                         num3Controller.text == "" ||
                         num4Controller.text == "") {
-                      _handlingOfEmptyFields("You didn't input some values");
+                      _handlingOfEmptyFields("RULE 2.");
+                    } else if (isAnyNumerZeor(
+                        int.parse(num1Controller.text),
+                        int.parse(num2Controller.text),
+                        int.parse(num3Controller.text),
+                        int.parse(num4Controller.text))) {
+                      _handlingOfEmptyFields("RULE 1.");
                     }
                     //To be implemented maybe
                     // else if (hasTwoSameNumbers(
@@ -660,6 +675,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
                       //counter for widgets
                       counterForWidgets++;
                       counterForTries--;
+                      numberOfTries++;
 
                       //making visiable correct numbers and correct spots
                       colorOfText = Colors.black;
@@ -782,10 +798,6 @@ class _MediumGameModeState extends State<MediumGameMode> {
                     )),
                   ),
                 ),
-                Text(
-                  "Dev. Mirza Kadrić v01.0 2023",
-                  style: GoogleFonts.sourceCodePro(fontSize: 12),
-                ),
               ],
               icon: Icon(Icons.error),
               title: Text("How to play PASSCODE CRACKER?"),
@@ -825,6 +837,9 @@ class _MediumGameModeState extends State<MediumGameMode> {
                             fontSize: 18),
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                   Text(
                     "In the input fields enter numbers in range 1 to 9, and try to crack code!",

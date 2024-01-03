@@ -5,11 +5,13 @@ import "package:audioplayers/audioplayers.dart";
 import "package:awesome_snackbar_content/awesome_snackbar_content.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:passcodecr/Win/GameOver/win_page2.dart";
 import "package:passcodecr/choosing_difficulty.dart";
 import "package:passcodecr/components/countdownTimer.dart";
 import "package:passcodecr/pages/game_over_page.dart";
 
 import "package:passcodecr/pages/win_page.dart";
+import "package:passcodecr/stateManagement/variables.dart";
 import "package:passcodecr/util/utilForAdditionalWidget.dart";
 import "package:passcodecr/util/utilForHardMode.dart";
 import "package:passcodecr/util/utilForMediumMode.dart";
@@ -33,10 +35,11 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
   Color colorOfText = Colors.white;
   int counterForWidgets = 0;
   int counterForTries = 6;
-
+  int numberOfTries = 0;
   void initState() {
     super.initState();
     randomNumbers = _generateRandomNumbers();
+    numberOfTries = 0;
   }
 
   void _chekForWin(int correctNumbers, int correctSpots) {
@@ -44,9 +47,11 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WinPage(
+            builder: (context) => WinPage2(
               nameOfPage: "Extreme",
               randomNumbers: randomNumbers,
+              tries: bodyElements,
+              numerOfTries: numberOfTries,
             ),
           ));
     }
@@ -76,6 +81,7 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
           MaterialPageRoute(
             builder: (context) => GameOverPage(
               randomNumbers: randomNumbers,
+              nameOfPage: "Extreme",
             ),
           ));
     });
@@ -295,7 +301,7 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
       //play sound
 
       setState(() {
-        AudioPlayer().play(AssetSource("right_spot.mp3"), volume: 20);
+        AudioPlayer().play(AssetSource("win_sound.mp3"), volume: 20);
       });
     }
   }
@@ -327,6 +333,10 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
 
   bool hasTwoSameNumbers(int a, int b, int c, int d) {
     return a == b || a == c || a == d || b == c || b == d || c == d;
+  }
+
+  bool isAnyNumerZeor(int a, int b, int c, int d) {
+    return a == 0 || b == 0 || c == 0 || d == 0;
   }
 
   Widget build(BuildContext context) {
@@ -380,9 +390,11 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
                         color: Colors.deepPurple),
                     child: Center(
                         child: Text(
-                      'Hard',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.white),
+                      'Extreme',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                          color: Colors.white),
                     )),
                   ),
                 ),
@@ -413,7 +425,18 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
                 ),
               ],
             ),
-            CountdownTimer(),
+            CountdownTimer(
+              isTimerOver: (value) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => GameOverPage(
+                        randomNumbers: randomNumbers,
+                        nameOfPage: "Extreme",
+                      ),
+                    ));
+              },
+            ),
             Spacer(),
 
             Row(
@@ -430,7 +453,6 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
                               color: colorOfText,
                               fontWeight: FontWeight.bold,
                               fontSize: 24)),
-                     
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Row(
@@ -469,6 +491,9 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
                       focusNode: _focusNode1,
                       onChanged: (String value) {
                         if (value.isNotEmpty) {
+                          if (!Variables.getTimerStatus()) {
+                            Variables.startTimerExtremeMode();
+                          }
                           _focusNode1.unfocus();
                           FocusScope.of(context).requestFocus(_focusNode2);
                         }
@@ -480,9 +505,6 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.number,
                       maxLength: 1,
-                      onFieldSubmitted: (value) {
-                        print(value);
-                      },
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(bottom: 5),
                         enabledBorder: OutlineInputBorder(
@@ -506,6 +528,10 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
                       focusNode: _focusNode2,
                       onChanged: (String value) {
                         if (value.isNotEmpty) {
+                          if (!Variables.getTimerStatus()) {
+                            Variables.startTimerExtremeMode();
+                          }
+
                           _focusNode2.unfocus();
                           FocusScope.of(context).requestFocus(_focusNode3);
                         }
@@ -542,7 +568,10 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
                       focusNode: _focusNode3,
                       onChanged: (String value) {
                         if (value.isNotEmpty) {
-                          print("kurac");
+                          if (!Variables.getTimerStatus()) {
+                            Variables.startTimerExtremeMode();
+                          }
+
                           _focusNode3.unfocus();
                           FocusScope.of(context).requestFocus(_focusNode4);
                         }
@@ -579,6 +608,9 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
                       focusNode: _focusNode4,
                       onChanged: (String value) {
                         if (value.isNotEmpty) {
+                          if (!Variables.getTimerStatus()) {
+                            Variables.startTimerExtremeMode();
+                          }
                           _focusNode4.unfocus();
                         }
                       },
@@ -623,6 +655,12 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
                         num3Controller.text == "" ||
                         num4Controller.text == "") {
                       _handlingOfEmptyFields("You didn't input some values");
+                    } else if (isAnyNumerZeor(
+                        int.parse(num1Controller.text),
+                        int.parse(num2Controller.text),
+                        int.parse(num3Controller.text),
+                        int.parse(num4Controller.text))) {
+                      _handlingOfEmptyFields("RULE 1.");
                     }
                     //To be implemented maybe
                     // else if (hasTwoSameNumbers(
@@ -653,7 +691,7 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
                       //counter for widgets
                       counterForWidgets++;
                       counterForTries--;
-
+                      numberOfTries++;
                       //making visiable correct numbers and correct spots
                       colorOfText = Colors.black;
 
@@ -775,15 +813,81 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
                     )),
                   ),
                 ),
-                Text(
-                  "Dev. Mirza Kadrić v01.0 2023",
-                  style: GoogleFonts.sourceCodePro(fontSize: 12),
-                ),
               ],
               icon: Icon(Icons.error),
               title: Text("How to play PASSCODE CRACKER?"),
               content: Column(
                 children: [
+                  Stack(children: [
+                    Container(
+                      padding: EdgeInsets.all(15),
+                      child: Container(
+                        height: 100,
+                        width: 200,
+                        decoration: BoxDecoration(
+                            color: Colors.purple,
+                            borderRadius: BorderRadius.circular(12)),
+                        child: Center(
+                          child: Text(
+                            "Extreme",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 32),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                        top: 0,
+                        right: 3,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.black,
+                          ),
+                          padding: EdgeInsets.all(5),
+                          child: Row(
+                            children: [
+                              Text(
+                                "+",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                " repeating numbers",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ))
+                  ]),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: 40,
+                    width: 120,
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Center(
+                      child: Text(
+                        "8 tries",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Text(
                     "In the input fields enter numbers in range 1 to 9, and try to crack code!",
                     style: GoogleFonts.sourceCodePro(

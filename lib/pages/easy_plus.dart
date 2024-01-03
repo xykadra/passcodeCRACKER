@@ -5,6 +5,7 @@ import "package:audioplayers/audioplayers.dart";
 import "package:awesome_snackbar_content/awesome_snackbar_content.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:passcodecr/Win/GameOver/win_page2.dart";
 import "package:passcodecr/choosing_difficulty.dart";
 import "package:passcodecr/pages/game_over_page.dart";
 
@@ -31,10 +32,12 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
   Color colorOfText = Colors.white;
   int counterForWidgets = 0;
   int counterForTries = 4;
+  int numberOfTries = 0;
 
   void initState() {
     super.initState();
     randomNumbers = _generateRandomNumbers();
+    numberOfTries = 0;
   }
 
   double heigthOfContainer1 = 40;
@@ -73,9 +76,11 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WinPage(
+            builder: (context) => WinPage2(
               nameOfPage: "EasyPlus",
               randomNumbers: randomNumbers,
+              tries: bodyElements,
+              numerOfTries: numberOfTries,
             ),
           ));
     }
@@ -106,6 +111,7 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
           context,
           MaterialPageRoute(
             builder: (context) => GameOverPage(
+              nameOfPage: "EasyPlus",
               randomNumbers: randomNumbers,
             ),
           ));
@@ -179,17 +185,6 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
       }
     }
 
-    // Map<String, List<int>> result = {
-    //   'correctNumbers': isNumberPresent.entries
-    //       .where((entry) => entry.value)
-    //       .map((entry) => entry.key)
-    //       .toList(),
-    //   'correctSpots': isNumberOnCorrectSpot.entries
-    //       .where((entry) => entry.value)
-    //       .map((entry) => entry.key)
-    //       .toList(),
-    // };
-
     return {correctNumbers: correctSpots};
   }
 
@@ -204,7 +199,7 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
       //play sound
 
       setState(() {
-        AudioPlayer().play(AssetSource("right_spot.mp3"), volume: 20);
+        AudioPlayer().play(AssetSource("right_spot_sound.mp3"), volume: 20);
       });
     }
   }
@@ -569,7 +564,7 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
                       //counter for widgets
                       counterForWidgets++;
                       counterForTries--;
-
+                      numberOfTries++;
                       //making visiable correct numbers and correct spots
                       colorOfText = Colors.black;
 
@@ -681,23 +676,19 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
                     )),
                   ),
                 ),
-                Text(
-                  "Dev. Mirza Kadrić v01.0 2023",
-                  style: GoogleFonts.sourceCodePro(fontSize: 12),
-                ),
               ],
               icon: Icon(Icons.error),
               title: Text("How to play PASSCODE CRACKER?"),
               content: Column(
                 children: [
-                       Container(
+                  Container(
                     height: 100,
                     width: 200,
                     decoration: BoxDecoration(
                         color: Colors.green.withOpacity(0.93),
                         borderRadius: BorderRadius.circular(12)),
                     child: Center(
-                      child: Row(
+                        child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -712,8 +703,7 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
                               fontWeight: FontWeight.bold, fontSize: 15),
                         ),
                       ],
-                    )
-                    ),
+                    )),
                   ),
                   SizedBox(
                     height: 10,
@@ -733,6 +723,9 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
                             fontSize: 18),
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                   Text(
                     "In the input fields enter numbers in range 1 to 9, and try to crack code!",
