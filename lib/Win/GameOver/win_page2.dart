@@ -314,37 +314,37 @@ class _WinPage2State extends State<WinPage2> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => EasyGameMode(),
-                      ));
+                          builder: (context) => EasyGameMode(),
+                          fullscreenDialog: true));
                 }
                 if (widget.nameOfPage == "EasyPlus") {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => EasyPlusGameMode(),
-                      ));
+                          builder: (context) => EasyPlusGameMode(),
+                          fullscreenDialog: true));
                 }
 
                 if (widget.nameOfPage == "Medium") {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MediumGameMode(),
-                      ));
+                          builder: (context) => MediumGameMode(),
+                          fullscreenDialog: true));
                 }
                 if (widget.nameOfPage == "Hard") {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => HardGameMode(),
-                      ));
+                          builder: (context) => HardGameMode(),
+                          fullscreenDialog: true));
                 }
                 if (widget.nameOfPage == "Extreme") {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ExtremeGameMode(),
-                      ));
+                          builder: (context) => ExtremeGameMode(),
+                          fullscreenDialog: true));
                 }
               },
               child: Padding(

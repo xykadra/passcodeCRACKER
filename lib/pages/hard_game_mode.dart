@@ -295,7 +295,7 @@ class _HardGameModeState extends State<HardGameMode> {
       //play sound
 
       setState(() {
-        AudioPlayer().play(AssetSource("right_spot.mp3"), volume: 20);
+        AudioPlayer().play(AssetSource("win_sound.mp3"), volume: 20);
       });
     }
   }
@@ -773,10 +773,10 @@ class _HardGameModeState extends State<HardGameMode> {
                   },
                   child: Container(
                     padding: EdgeInsets.all(2),
-                    height: 40,
+                    height: 80,
                     decoration: BoxDecoration(
                       color: Colors.black,
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
                         child: Text(

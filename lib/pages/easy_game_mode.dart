@@ -21,7 +21,6 @@ class EasyGameMode extends StatefulWidget {
 }
 
 class _EasyGameModeState extends State<EasyGameMode> {
-
   //Lists
   List<int> inputNumbers = [];
 
@@ -195,11 +194,10 @@ class _EasyGameModeState extends State<EasyGameMode> {
   }
 
   void _checkForSpotSound(int rightSpots) {
-    print("sound");
-
     if (rightSpots > 0) {
-      //play sound
-      AudioPlayer().play(AssetSource("right_spot_sound.mp3"), volume: 20);
+      setState(() {
+        AudioPlayer().play(AssetSource("win_sound.mp3"), volume: 20);
+      });
     }
   }
 
@@ -653,10 +651,10 @@ class _EasyGameModeState extends State<EasyGameMode> {
                   },
                   child: Container(
                     padding: EdgeInsets.all(2),
-                    height: 40,
+                    height: 80,
                     decoration: BoxDecoration(
                       color: Colors.black,
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
                         child: Text(

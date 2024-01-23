@@ -106,37 +106,37 @@ class WinPage extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => EasyGameMode(),
-                      ));
+                          builder: (context) => EasyGameMode(),
+                          fullscreenDialog: true));
                 }
                 if (nameOfPage == "EasyPlus") {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => EasyPlusGameMode(),
-                      ));
+                          builder: (context) => EasyPlusGameMode(),
+                          fullscreenDialog: true));
                 }
 
                 if (nameOfPage == "Medium") {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MediumGameMode(),
-                      ));
+                          builder: (context) => MediumGameMode(),
+                          fullscreenDialog: true));
                 }
                 if (nameOfPage == "Hard") {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => HardGameMode(),
-                      ));
+                          builder: (context) => HardGameMode(),
+                          fullscreenDialog: true));
                 }
                 if (nameOfPage == "Extreme") {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ExtremeGameMode(),
-                      ));
+                          builder: (context) => ExtremeGameMode(),
+                          fullscreenDialog: true));
                 }
               },
               child: Padding(
