@@ -1,4 +1,5 @@
 import "dart:async";
+import "dart:ffi";
 import "dart:math";
 
 import "package:audioplayers/audioplayers.dart";
@@ -9,6 +10,7 @@ import "package:passcodecr/Win/GameOver/win_page2.dart";
 import "package:passcodecr/choosing_difficulty.dart";
 import "package:passcodecr/pages/game_over_page.dart";
 import "package:passcodecr/stateManagement/variables.dart";
+import "package:passcodecr/util/utilForExtremeMode.dart";
 import "package:passcodecr/util/utilForHardMode.dart";
 
 class ExtremeGameMode extends StatefulWidget {
@@ -33,6 +35,9 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
   int numberOfTries = 0;
   void initState() {
     super.initState();
+    //setting duplicates to empty every time page restarts
+    isThereDuplicatesInInputNumbers = false;
+    duplicates = Set<int>();
     randomNumbers = _generateRandomNumbers();
     numberOfTries = 0;
   }
@@ -57,13 +62,15 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
     counterForWidgets < 6
         ? bodyElements.add(Padding(
             padding: const EdgeInsets.only(bottom: 0.0),
-            child: UtilForHardMode(
+            child: UtilForExtremeMode(
               num1: num1,
               num2: num2,
               num3: num3,
               num4: num4,
               correctNumbers: correctNumbers,
               correctSpots: correctSpots,
+              isThereDuplicates: isThereDuplicatesInInputNumbers,
+              whichNumberIsDuplicate: whichNumberIsDuplicate,
             ),
           ))
         : _navigateToGameOverPage(randomNumbers);
@@ -297,10 +304,12 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
   }
 
   void checkWhichNumberOccuredMultipleTimes() {
-    resetOccurances(occurances);
+    int number1 = randomNumbers[0];
+    int number2 = randomNumbers[1];
+    int number3 = randomNumbers[2];
+    int number4 = randomNumbers[3];
     for (int i = 0; i < randomNumbers.length; i++) {
-      int currentNumber = randomNumbers[i];
-      if (randomNumbers.contains(currentNumber)) {
+      if (number1 == randomNumbers[i]) {
         print("AAA");
         incrementOccurrence(i, occurances);
       }
@@ -399,6 +408,48 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
   void dispose() {
     _timer.cancel();
     super.dispose();
+  }
+
+  Set<int> duplicates = Set<int>();
+
+  bool isThereDuplicatesInInputNumbers = false;
+  void checkDuplicates(List<int> numbers) {
+    Set<int> uniqueNumbers = Set<int>();
+
+    for (int number in numbers) {
+      if (!uniqueNumbers.add(number)) {
+        // If the number is already in uniqueNumbers, it's a duplicate
+        duplicates.add(number);
+      }
+    }
+  }
+
+  int whichNumberIsDuplicate = 0;
+  void whichNumberIsDuplicateMethod() {
+    //checking if any inputed number equals duplicate number in random numbers generated
+    //if number is equal to duplicate number we are setting whichNUmberIsDuplicate state to corresponding spot
+
+    if (num1Controller.text == duplicates.elementAt(0).toString()) {
+      setState(() {
+        isThereDuplicatesInInputNumbers = true;
+        whichNumberIsDuplicate = 0;
+      });
+    } else if (num2Controller.text == duplicates.elementAt(0).toString()) {
+      setState(() {
+        isThereDuplicatesInInputNumbers = true;
+        whichNumberIsDuplicate = 1;
+      });
+    } else if (num3Controller.text == duplicates.elementAt(0).toString()) {
+      setState(() {
+        isThereDuplicatesInInputNumbers = true;
+        whichNumberIsDuplicate = 2;
+      });
+    } else if (num4Controller.text == duplicates.elementAt(0).toString()) {
+      setState(() {
+        isThereDuplicatesInInputNumbers = true;
+        whichNumberIsDuplicate = 3;
+      });
+    }
   }
 
   Widget build(BuildContext context) {
@@ -726,6 +777,12 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
                         isNumberOnCorrectSpot[2] = false;
                         isNumberOnCorrectSpot[3] = false;
 
+                        //logic for duplicates checker
+                        checkDuplicates(randomNumbers);
+                        isThereDuplicatesInInputNumbers
+                            ? whichNumberIsDuplicateMethod()
+                            : null;
+
                         //counter for widgets
                         counterForWidgets++;
                         counterForTries--;
@@ -795,32 +852,33 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
                     fontSize: 25,
                     fontWeight: FontWeight.bold),
               ),
-              Text(counterForWidgets.toString()),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ExtremeGameMode(),
-                        ));
-                  },
-                  child: Text("Generate new numbers")),
-              ElevatedButton(
-                  onPressed: () {
-                    //Testing
-                    print("Printing numbers if they are present");
-                    print(isNumberPresent);
-                    print("Printing numbers if they are on correct  spot");
-                    print(isNumberOnCorrectSpot);
-                  },
-                  child: Text("See present and correct spots")),
-              ElevatedButton(
-                  onPressed: () {
-                    //Testing
-                    //checkIsThereRepeatingNumbers(randomNumbers);
-                    checkWhichNumberOccuredMultipleTimes();
-                  },
-                  child: Text("Check repeating numbers")),
+              // Text(counterForWidgets.toString()),
+              // ElevatedButton(
+              //     onPressed: () {
+              //       Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //             builder: (context) => ExtremeGameMode(),
+              //           ));
+              //     },
+              //     child: Text("Generate new numbers")),
+              // ElevatedButton(
+              //     onPressed: () {
+              //       //Testing
+              //       print("Printing numbers if they are present");
+              //       print(isNumberPresent);
+              //       print("Printing numbers if they are on correct  spot");
+              //       print(isNumberOnCorrectSpot);
+              //     },
+              //     child: Text("See present and correct spots")),
+              // ElevatedButton(
+              //     onPressed: () {
+              //       //Testing
+              //       //checkIsThereRepeatingNumbers(randomNumbers);
+              //       //checkWhichNumberOccuredMultipleTimes();
+              //       //findDuplicates(randomNumbers);
+              //     },
+              //     child: Text("Check repeating numbers")),
 
               Spacer(),
             ],
@@ -980,15 +1038,24 @@ Future<dynamic> dialog(BuildContext context) {
                   padding: EdgeInsets.all(5),
                   //height: 40,
                   decoration: BoxDecoration(
-                      color: Colors.deepPurple,
+                      color: Colors.black,
                       borderRadius: BorderRadius.circular(12)),
                   child: Center(
-                    child: Text(
-                      "If number is duplicate it will be colored",
-                      style: TextStyle(
+                    child: Row(
+                      children: [
+                        Text(
+                          "If number is duplicate start will appear",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12),
+                        ),
+                        Icon(
+                          Icons.star,
+                          size: 10,
                           color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12),
+                        )
+                      ],
                     ),
                   ),
                 ),
