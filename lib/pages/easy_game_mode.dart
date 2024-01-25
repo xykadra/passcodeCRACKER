@@ -73,15 +73,16 @@ class _EasyGameModeState extends State<EasyGameMode> {
   void _chekForWin(int correctNumbers, int correctSpots) {
     if (correctNumbers == 4 && correctSpots == 4) {
       Navigator.push(
-          context,
-          MaterialPageRoute(
+        context,
+        MaterialPageRoute(
             builder: (context) => WinPage2(
-              nameOfPage: "Easy",
-              randomNumbers: randomNumbers,
-              tries: bodyElements,
-              numerOfTries: numberOfTries,
-            ),
-          ));
+                  nameOfPage: "Easy",
+                  randomNumbers: randomNumbers,
+                  tries: bodyElements,
+                  numerOfTries: numberOfTries,
+                ),
+            fullscreenDialog: true),
+      );
     }
   }
 

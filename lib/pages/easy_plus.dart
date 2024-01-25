@@ -76,13 +76,13 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WinPage2(
-              nameOfPage: "EasyPlus",
-              randomNumbers: randomNumbers,
-              tries: bodyElements,
-              numerOfTries: numberOfTries,
-            ),
-          ));
+              builder: (context) => WinPage2(
+                    nameOfPage: "EasyPlus",
+                    randomNumbers: randomNumbers,
+                    tries: bodyElements,
+                    numerOfTries: numberOfTries,
+                  ),
+              fullscreenDialog: true));
     }
   }
 

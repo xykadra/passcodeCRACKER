@@ -48,13 +48,13 @@ class _HardGameModeState extends State<HardGameMode> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WinPage2(
-              nameOfPage: "Hard",
-              randomNumbers: randomNumbers,
-              tries: bodyElements,
-              numerOfTries: numberOfTries,
-            ),
-          ));
+              builder: (context) => WinPage2(
+                    nameOfPage: "Hard",
+                    randomNumbers: randomNumbers,
+                    tries: bodyElements,
+                    numerOfTries: numberOfTries,
+                  ),
+              fullscreenDialog: true));
     }
   }
 
@@ -459,7 +459,7 @@ class _HardGameModeState extends State<HardGameMode> {
               height: 5,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25),
+              padding: EdgeInsets.symmetric(horizontal: 50),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

@@ -49,13 +49,13 @@ class _MediumGameModeState extends State<MediumGameMode> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WinPage2(
-              nameOfPage: "Medium",
-              randomNumbers: randomNumbers,
-              tries: bodyElements,
-              numerOfTries: numberOfTries,
-            ),
-          ));
+              builder: (context) => WinPage2(
+                    nameOfPage: "Medium",
+                    randomNumbers: randomNumbers,
+                    tries: bodyElements,
+                    numerOfTries: numberOfTries,
+                  ),
+              fullscreenDialog: true));
     }
   }
 

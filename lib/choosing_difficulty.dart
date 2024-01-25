@@ -47,6 +47,17 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
     pref.setInt("total_hard_wins", 0);
   }
 
+  Future<void> _unlockHardExtremeMode() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setInt("total_medium_wins", 10);
+    pref.setInt("total_hard_wins", 10);
+  }
+
+  Future<void> _unlockHardMode() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setInt("total_medium_wins", 10);
+  }
+
   bool unlockedStatusHard() {
     if (totalMediumWins < 10) {
       return false;
@@ -61,6 +72,83 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
     } else {
       return true;
     }
+  }
+
+  int getHowManyMoreMediumWins() {
+    return 10 - totalMediumWins;
+  }
+
+  int getHowManyMoreHardWins() {
+    return 10 - totalHardWins;
+  }
+
+  Future<dynamic> cannotStartHardModeDialog(
+      BuildContext context, String HowManyMoreMediumWins) {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              actions: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(2),
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Center(
+                        child: Text(
+                      "OK",
+                      style: TextStyle(color: Colors.white, fontSize: 25),
+                    )),
+                  ),
+                ),
+              ],
+              title: Text(
+                "You need to win " +
+                    HowManyMoreMediumWins +
+                    " more medium games to unlock HARD MODE",
+                textAlign: TextAlign.center,
+              ),
+            ));
+  }
+
+  Future<dynamic> cannotStartExtremeModeDialog(
+      BuildContext context, String HowManyMoreHardWins) {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              actions: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(2),
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.purple,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Center(
+                        child: Text(
+                      "OK",
+                      style: TextStyle(color: Colors.white, fontSize: 25),
+                    )),
+                  ),
+                ),
+              ],
+              //icon: Icon(Icons.airline_seat_legroom_extra_outlined),
+              title: Text(
+                "You need to win " +
+                    HowManyMoreHardWins +
+                    " more hard games to unlock EXTREME MODE",
+                textAlign: TextAlign.center,
+              ),
+            ));
   }
 
   @override
@@ -178,11 +266,14 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
                 ),
                 GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HardGameMode(),
-                              fullscreenDialog: true));
+                      unlockedStatusHard()
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HardGameMode(),
+                                  fullscreenDialog: true))
+                          : cannotStartHardModeDialog(
+                              context, getHowManyMoreMediumWins().toString());
                     },
                     child: Stack(children: [
                       Container(
@@ -227,11 +318,14 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
                 ),
                 GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ExtremeGameMode(),
-                              fullscreenDialog: true));
+                      unlockedStatusExtreme()
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ExtremeGameMode(),
+                                  fullscreenDialog: true))
+                          : cannotStartExtremeModeDialog(
+                              context, getHowManyMoreHardWins().toString());
                     },
                     child: Stack(children: [
                       Container(
@@ -284,11 +378,39 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
             child: ElevatedButton(
                 onPressed: () {
                   _restartWins();
-                  MaterialPageRoute(
-                      builder: (context) => ChoosingDifficulty(),
-                      fullscreenDialog: true);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ChoosingDifficulty(),
+                          fullscreenDialog: true));
                 },
-                child: Text("Restart Wins")))
+                child: Text("Lock Hard and Extreme Mode"))),
+        Positioned(
+            bottom: 50,
+            right: 20,
+            child: ElevatedButton(
+                onPressed: () {
+                  _unlockHardExtremeMode();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ChoosingDifficulty(),
+                          fullscreenDialog: true));
+                },
+                child: Text("Unlock Hard and Extreme Mode"))),
+        Positioned(
+            bottom: 100,
+            right: 20,
+            child: ElevatedButton(
+                onPressed: () {
+                  _unlockHardMode();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ChoosingDifficulty(),
+                          fullscreenDialog: true));
+                },
+                child: Text("Unlock Hard Mode")))
       ]),
     );
   }

@@ -47,13 +47,13 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WinPage2(
-              nameOfPage: "Extreme",
-              randomNumbers: randomNumbers,
-              tries: bodyElements,
-              numerOfTries: numberOfTries,
-            ),
-          ));
+              builder: (context) => WinPage2(
+                    nameOfPage: "Extreme",
+                    randomNumbers: randomNumbers,
+                    tries: bodyElements,
+                    numerOfTries: numberOfTries,
+                  ),
+              fullscreenDialog: true));
     }
   }
 
@@ -420,6 +420,8 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
       if (!uniqueNumbers.add(number)) {
         // If the number is already in uniqueNumbers, it's a duplicate
         duplicates.add(number);
+        //and also we need to check which number is duplicate in inputed numbers
+        whichNumberIsDuplicateMethod();
       }
     }
   }
@@ -779,10 +781,6 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
 
                         //logic for duplicates checker
                         checkDuplicates(randomNumbers);
-                        isThereDuplicatesInInputNumbers
-                            ? whichNumberIsDuplicateMethod()
-                            : null;
-
                         //counter for widgets
                         counterForWidgets++;
                         counterForTries--;
