@@ -184,7 +184,7 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
                     padding: EdgeInsets.all(8),
                     height: 60,
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
+                       // border: Border.all(color: Colors.black),
                         borderRadius: BorderRadius.circular(12),
                         color: Colors.green),
                     child: Center(
@@ -196,7 +196,7 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
                   ),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -207,12 +207,12 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
                             fullscreenDialog: true));
                   },
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 100.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 0.0),
                     child: Container(
                       padding: EdgeInsets.all(8),
                       height: 40,
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
+                         // border: Border.all(color: Colors.black),
                           borderRadius: BorderRadius.circular(12),
                           color: Colors.green.withOpacity(0.93)),
                       child: Center(
@@ -236,7 +236,7 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
                   ),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 15,
                 ),
                 GestureDetector(
                   onTap: () {

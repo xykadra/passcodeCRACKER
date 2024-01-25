@@ -44,6 +44,7 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
 
   void _chekForWin(int correctNumbers, int correctSpots) {
     if (correctNumbers == 4 && correctSpots == 4) {
+      _timer.cancel();
       Navigator.push(
           context,
           MaterialPageRoute(
