@@ -9,9 +9,8 @@ import "package:google_fonts/google_fonts.dart";
 import "package:passcodecr/Win/GameOver/win_page2.dart";
 import "package:passcodecr/choosing_difficulty.dart";
 import "package:passcodecr/pages/game_over_page.dart";
-import "package:passcodecr/stateManagement/variables.dart";
+import "package:passcodecr/stateManagement/wins_state.dart";
 import "package:passcodecr/util/utilForExtremeMode.dart";
-import "package:passcodecr/util/utilForHardMode.dart";
 
 class ExtremeGameMode extends StatefulWidget {
   const ExtremeGameMode({super.key});
@@ -44,7 +43,10 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
 
   void _chekForWin(int correctNumbers, int correctSpots) {
     if (correctNumbers == 4 && correctSpots == 4) {
+      WinsState.incrementExtremeWins();
+
       _timer.cancel();
+
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -769,7 +771,7 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
                       //   _handlingOfEmptyFields("Somewhere zero?");
                       // }
                       else {
-                        Variables.startTimerExtremeMode();
+                        //Variables.startTimerExtremeMode();
                         isNumberPresent[0] = false;
                         isNumberPresent[1] = false;
                         isNumberPresent[2] = false;

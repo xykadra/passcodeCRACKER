@@ -152,34 +152,38 @@ class _WinPage2State extends State<WinPage2> {
             //     children: tries,
             //   ),
             // ),
-            // Padding(
-            //   padding: const EdgeInsets.all(18.0),
-            //   child: Container(
-            //     padding: EdgeInsets.all(10),
-            //     decoration: BoxDecoration(
-            //       color: Colors.white,
-            //     ),
-            //     child: Center(
-            //       child: Column(
-            //         children: [
-            //           Text(
-            //             "YESS, YOUR NUMBERS WERE",
-            //             style: GoogleFonts.inter(fontSize: 20),
+
+            // Spacer(),
+            // !isContainerOpen
+            //     ? Padding(
+            //         padding: const EdgeInsets.all(18.0),
+            //         child: Container(
+            //           padding: EdgeInsets.all(10),
+            //           decoration: BoxDecoration(
+            //             color: Colors.white,
             //           ),
-            //           Text(
-            //             randomNumbers
-            //                 .toString()
-            //                 .replaceAll('[', '')
-            //                 .replaceAll(']', '')
-            //                 .replaceAll(',', ""),
-            //             style: GoogleFonts.inter(
-            //                 fontSize: 32, fontWeight: FontWeight.bold),
+            //           child: Center(
+            //             child: Column(
+            //               children: [
+            //                 Text(
+            //                   "YESS, YOUR NUMBERS WERE",
+            //                   style: GoogleFonts.inter(fontSize: 20),
+            //                 ),
+            //                 Text(
+            //                   widget.randomNumbers
+            //                       .toString()
+            //                       .replaceAll('[', '')
+            //                       .replaceAll(']', '')
+            //                       .replaceAll(',', ""),
+            //                   style: GoogleFonts.inter(
+            //                       fontSize: 32, fontWeight: FontWeight.bold),
+            //                 ),
+            //               ],
+            //             ),
             //           ),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
+            //         ),
+            //       )
+            //     : SizedBox(),
 
             // Lottie.asset(
             //   "lib/assets/win.json",
@@ -211,6 +215,33 @@ class _WinPage2State extends State<WinPage2> {
                           horizontal: 0.0, vertical: topPadding),
                       child: Column(
                         children: [
+                          isContainerOpen
+                              ? Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "YESS, YOUR NUMBERS WERE",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        widget.randomNumbers
+                                            .toString()
+                                            .replaceAll('[', '')
+                                            .replaceAll(']', '')
+                                            .replaceAll(',', ""),
+                                        style: GoogleFonts.inter(
+                                            fontSize: 32,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : Container(),
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 20.0),

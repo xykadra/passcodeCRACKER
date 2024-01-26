@@ -15,8 +15,11 @@ class ChoosingDifficulty extends StatefulWidget {
 }
 
 class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
+  int totalEasyWins = 0;
+  int totalEasyPlusWins = 0;
   int totalMediumWins = 0;
   int totalHardWins = 0;
+  int totalExtremeMode = 0;
 
   void initState() {
     super.initState();
@@ -24,11 +27,18 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
   }
 
   Future<void> _fetchWins() async {
+    int easyWins = await getTotalWins("total_easy_wins");
+    int easyPlusWins = await getTotalWins("total_easy_plus_wins");
     int mediumWins = await getTotalWins("total_medium_wins");
     int hardWins = await getTotalWins("total_hard_wins");
+    int extremeWins = await getTotalWins("total_extreme_wins");
+
     setState(() {
+      totalEasyWins = easyWins;
+      totalEasyPlusWins = easyPlusWins;
       totalMediumWins = mediumWins;
       totalHardWins = hardWins;
+      totalExtremeMode = extremeWins;
     });
   }
 
@@ -151,6 +161,139 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
             ));
   }
 
+  Future<dynamic> userStats(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Column(
+                children: [
+                  Text(
+                    "User Stats",
+                    style: TextStyle(
+                      fontSize: 32,
+                    ),
+                  ),
+                  Table(
+                    border: TableBorder.all(color: Colors.black),
+                    children: [
+                      // TableRow(
+                      //   decoration: BoxDecoration(color: Colors.black),
+                      //   children: [
+                      //     Padding(
+                      //       padding: const EdgeInsets.all(8.0),
+                      //       child: Text(
+                      //         'Mode',
+                      //         style: TextStyle(color: Colors.white),
+                      //       ),
+                      //     ),
+                      //     Padding(
+                      //       padding: const EdgeInsets.all(8.0),
+                      //       child: Text(
+                      //         'Wins',
+                      //         style: TextStyle(color: Colors.white),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      TableRow(
+                        decoration: BoxDecoration(color: Colors.green),
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Easy'),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              totalEasyWins.toString(),
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ],
+                      ),
+                      TableRow(
+                        decoration: BoxDecoration(color: Colors.green),
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'EasyPlus',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              totalEasyPlusWins.toString(),
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ],
+                      ),
+                      TableRow(
+                        decoration: BoxDecoration(color: Colors.orange),
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Medium',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              totalMediumWins.toString(),
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ],
+                      ),
+                      TableRow(
+                        decoration: BoxDecoration(color: Colors.red),
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Hard',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              totalHardWins.toString(),
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ],
+                      ),
+                      TableRow(
+                        decoration: BoxDecoration(color: Colors.deepPurple),
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Extreme',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              totalExtremeMode.toString(),
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -184,7 +327,7 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
                     padding: EdgeInsets.all(8),
                     height: 60,
                     decoration: BoxDecoration(
-                       // border: Border.all(color: Colors.black),
+                        // border: Border.all(color: Colors.black),
                         borderRadius: BorderRadius.circular(12),
                         color: Colors.green),
                     child: Center(
@@ -212,7 +355,7 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
                       padding: EdgeInsets.all(8),
                       height: 40,
                       decoration: BoxDecoration(
-                         // border: Border.all(color: Colors.black),
+                          // border: Border.all(color: Colors.black),
                           borderRadius: BorderRadius.circular(12),
                           color: Colors.green.withOpacity(0.93)),
                       child: Center(
@@ -385,6 +528,24 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
                           fullscreenDialog: true));
                 },
                 child: Text("Lock Hard and Extreme Mode"))),
+        Positioned(
+            top: 50,
+            right: 20,
+            child: GestureDetector(
+              onTap: () {
+                userStats(context);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(30)),
+                padding: EdgeInsets.all(8),
+                child: Icon(
+                  Icons.info,
+                  color: Colors.white,
+                ),
+              ),
+            )),
         Positioned(
             bottom: 50,
             right: 20,

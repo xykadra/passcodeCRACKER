@@ -10,6 +10,7 @@ import "package:passcodecr/choosing_difficulty.dart";
 import "package:passcodecr/pages/game_over_page.dart";
 
 import "package:passcodecr/pages/win_page.dart";
+import "package:passcodecr/stateManagement/wins_state.dart";
 import "package:passcodecr/util/utilForAdditionalWidget.dart";
 import "package:passcodecr/util/utilFroEasyMode.dart";
 
@@ -73,6 +74,7 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
 
   void _chekForWin(int correctNumbers, int correctSpots) {
     if (correctNumbers == 4 && correctSpots == 4) {
+      WinsState.incrementEasyPlusWins();
       Navigator.push(
           context,
           MaterialPageRoute(
