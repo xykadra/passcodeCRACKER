@@ -127,7 +127,6 @@ class _WinPage2State extends State<WinPage2> {
             ));
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -282,46 +281,50 @@ class _WinPage2State extends State<WinPage2> {
                           showContentInsideContainer
                               ? Column(
                                   children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Container(
-                                          width: 200,
-                                          padding: EdgeInsets.all(10),
-                                          //color: Colors.red,
-                                          child: Column(
+                                    nameOfBackPage == "Easy" &&
+                                            nameOfBackPage == "EasyPlus"
+                                        ? Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
                                             children: [
-                                              Text("    CORRECT",
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 24)),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 20),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                              Container(
+                                                width: 200,
+                                                padding: EdgeInsets.all(10),
+                                                //color: Colors.red,
+                                                child: Column(
                                                   children: [
-                                                    Text("      NUMBER",
+                                                    Text("    CORRECT",
                                                         style: TextStyle(
-                                                            color:
-                                                                Colors.black)),
-                                                    Text("SPOTS",
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.black)),
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 24)),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 20),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text("      NUMBER",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black)),
+                                                          Text("SPOTS",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black)),
+                                                        ],
+                                                      ),
+                                                    ),
                                                   ],
                                                 ),
                                               ),
                                             ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                          )
+                                        : Container(),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 20.0),
