@@ -176,25 +176,25 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
                   Table(
                     border: TableBorder.all(color: Colors.black),
                     children: [
-                      // TableRow(
-                      //   decoration: BoxDecoration(color: Colors.black),
-                      //   children: [
-                      //     Padding(
-                      //       padding: const EdgeInsets.all(8.0),
-                      //       child: Text(
-                      //         'Mode',
-                      //         style: TextStyle(color: Colors.white),
-                      //       ),
-                      //     ),
-                      //     Padding(
-                      //       padding: const EdgeInsets.all(8.0),
-                      //       child: Text(
-                      //         'Wins',
-                      //         style: TextStyle(color: Colors.white),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
+                      TableRow(
+                        decoration: BoxDecoration(color: Colors.black),
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Mode',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Wins',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
                       TableRow(
                         decoration: BoxDecoration(color: Colors.green),
                         children: [
@@ -271,11 +271,16 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
                       TableRow(
                         decoration: BoxDecoration(color: Colors.deepPurple),
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Extreme',
-                              style: TextStyle(color: Colors.white),
+                          GestureDetector(
+                            onTap: () {
+                              turnCheatMode();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'Extreme',
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ),
                           Padding(
@@ -292,6 +297,14 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
                 ],
               ),
             ));
+  }
+
+  bool isCheatMode = false;
+
+  void turnCheatMode() {
+    setState(() {
+      isCheatMode = !isCheatMode;
+    });
   }
 
   @override
@@ -515,19 +528,21 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
             ),
           ),
         ),
-        Positioned(
-            top: 50,
-            left: 20,
-            child: ElevatedButton(
-                onPressed: () {
-                  _restartWins();
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChoosingDifficulty(),
-                          fullscreenDialog: true));
-                },
-                child: Text("Lock Hard and Extreme Mode"))),
+        isCheatMode
+            ? Positioned(
+                top: 50,
+                left: 20,
+                child: ElevatedButton(
+                    onPressed: () {
+                      _restartWins();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChoosingDifficulty(),
+                              fullscreenDialog: true));
+                    },
+                    child: Text("Lock Hard and Extreme Mode")))
+            : Container(),
         Positioned(
             top: 50,
             right: 20,
@@ -546,32 +561,36 @@ class _ChoosingDifficultyState extends State<ChoosingDifficulty> {
                 ),
               ),
             )),
-        Positioned(
-            bottom: 50,
-            right: 20,
-            child: ElevatedButton(
-                onPressed: () {
-                  _unlockHardExtremeMode();
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChoosingDifficulty(),
-                          fullscreenDialog: true));
-                },
-                child: Text("Unlock Hard and Extreme Mode"))),
-        Positioned(
-            bottom: 100,
-            right: 20,
-            child: ElevatedButton(
-                onPressed: () {
-                  _unlockHardMode();
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChoosingDifficulty(),
-                          fullscreenDialog: true));
-                },
-                child: Text("Unlock Hard Mode")))
+        isCheatMode
+            ? Positioned(
+                bottom: 50,
+                right: 20,
+                child: ElevatedButton(
+                    onPressed: () {
+                      _unlockHardExtremeMode();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChoosingDifficulty(),
+                              fullscreenDialog: true));
+                    },
+                    child: Text("Unlock Hard and Extreme Mode")))
+            : Container(),
+        isCheatMode
+            ? Positioned(
+                bottom: 100,
+                right: 20,
+                child: ElevatedButton(
+                    onPressed: () {
+                      _unlockHardMode();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChoosingDifficulty(),
+                              fullscreenDialog: true));
+                    },
+                    child: Text("Unlock Hard Mode")))
+            : Container(),
       ]),
     );
   }

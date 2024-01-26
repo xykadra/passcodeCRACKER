@@ -734,13 +734,13 @@ class _MediumGameModeState extends State<MediumGameMode> {
             ),
 
             //Uncomment this for debugging
-            Text(
-              "Random number: " + randomNumbers.toString(),
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold),
-            ),
+            // Text(
+            //   "Random number: " + randomNumbers.toString(),
+            //   style: TextStyle(
+            //       color: Colors.black,
+            //       fontSize: 25,
+            //       fontWeight: FontWeight.bold),
+            // ),
             // Text(counterForWidgets.toString()),
             // ElevatedButton(
             //     onPressed: () {
