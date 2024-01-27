@@ -1,17 +1,12 @@
 import "dart:math";
-
 import "package:audioplayers/audioplayers.dart";
-
 import "package:awesome_snackbar_content/awesome_snackbar_content.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:passcodecr/Win/GameOver/win_page2.dart";
 import "package:passcodecr/choosing_difficulty.dart";
 import "package:passcodecr/pages/game_over_page.dart";
-
-import "package:passcodecr/pages/win_page.dart";
 import "package:passcodecr/stateManagement/wins_state.dart";
-import "package:passcodecr/util/utilForAdditionalWidget.dart";
 import "package:passcodecr/util/utilFroEasyMode.dart";
 
 class EasyGameMode extends StatefulWidget {
@@ -551,11 +546,6 @@ class _EasyGameModeState extends State<EasyGameMode> {
                       isNumberOnCorrectSpot[2] = false;
                       isNumberOnCorrectSpot[3] = false;
 
-                      //counter for widgets
-                      counterForWidgets++;
-                      counterForTries--;
-                      numberOfTries++;
-
                       //making visiable correct numbers and correct spots
                       colorOfText = Colors.black;
 
@@ -587,6 +577,13 @@ class _EasyGameModeState extends State<EasyGameMode> {
                       num2Controller.text = "";
                       num3Controller.text = "";
                       num4Controller.text = "";
+
+                      //counter for widgets
+                      counterForWidgets++;
+                      counterForTries--;
+                      numberOfTries++;
+
+                      print("This is number of tries in easy mode::: "+bodyElements.length.toString());
                     }
                   });
                 },

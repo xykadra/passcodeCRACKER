@@ -36,7 +36,7 @@ class _WinPage2State extends State<WinPage2> {
       nameOfBackPage = "Easy";
     }
     if (nameOfPage == "EasyPlus") {
-      nameOfBackPage = "😀";
+      nameOfBackPage = "EasyPlus";
     }
     if (nameOfPage == "Medium") {
       nameOfBackPage = "Medium";
@@ -51,6 +51,7 @@ class _WinPage2State extends State<WinPage2> {
 
   initState() {
     super.initState;
+    print("This is number of tries: " + widget.tries.toString());
     checkBackName(widget.nameOfPage);
   }
 

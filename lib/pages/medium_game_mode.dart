@@ -9,11 +9,8 @@ import "package:passcodecr/Win/GameOver/win_page2.dart";
 import "package:passcodecr/choosing_difficulty.dart";
 import "package:passcodecr/pages/game_over_page.dart";
 
-import "package:passcodecr/pages/win_page.dart";
 import "package:passcodecr/stateManagement/wins_state.dart";
-import "package:passcodecr/util/utilForAdditionalWidget.dart";
 import "package:passcodecr/util/utilForMediumMode.dart";
-import "package:shared_preferences/shared_preferences.dart";
 
 class MediumGameMode extends StatefulWidget {
   const MediumGameMode({super.key});
