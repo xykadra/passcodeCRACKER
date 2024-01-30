@@ -55,6 +55,7 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
                     randomNumbers: randomNumbers,
                     tries: bodyElements,
                     numerOfTries: numberOfTries,
+                    inputTries: [],
                   ),
               fullscreenDialog: true));
     }
@@ -784,10 +785,7 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
 
                         //logic for duplicates checker
                         checkDuplicates(randomNumbers);
-                        //counter for widgets
-                        counterForWidgets++;
-                        counterForTries--;
-                        numberOfTries++;
+
                         startTimerWhenTryPressed(numberOfTries);
                         //making visiable correct numbers and correct spots
                         colorOfText = Colors.black;
@@ -820,6 +818,11 @@ class _ExtremeGameModeState extends State<ExtremeGameMode> {
                         num2Controller.text = "";
                         num3Controller.text = "";
                         num4Controller.text = "";
+
+                        //counter for widgets
+                        counterForWidgets++;
+                        counterForTries--;
+                        numberOfTries++;
                       }
                     });
                   },

@@ -9,9 +9,8 @@ import "package:passcodecr/Win/GameOver/win_page2.dart";
 import "package:passcodecr/choosing_difficulty.dart";
 import "package:passcodecr/pages/game_over_page.dart";
 
-
 import "package:passcodecr/stateManagement/wins_state.dart";
-import "package:passcodecr/util/utilForAdditionalWidget.dart";
+import 'package:passcodecr/util/utilForEasyPlusMode.dart';
 import "package:passcodecr/util/utilForHardMode.dart";
 import "package:passcodecr/util/utilForMediumMode.dart";
 
@@ -53,6 +52,7 @@ class _HardGameModeState extends State<HardGameMode> {
                     randomNumbers: randomNumbers,
                     tries: bodyElements,
                     numerOfTries: numberOfTries,
+                    inputTries: [],
                   ),
               fullscreenDialog: true));
     }
@@ -661,10 +661,6 @@ class _HardGameModeState extends State<HardGameMode> {
                       isNumberOnCorrectSpot[2] = false;
                       isNumberOnCorrectSpot[3] = false;
 
-                      //counter for widgets
-                      counterForWidgets++;
-                      counterForTries--;
-                      numberOfTries++;
                       //making visiable correct numbers and correct spots
                       colorOfText = Colors.black;
 
@@ -696,6 +692,11 @@ class _HardGameModeState extends State<HardGameMode> {
                       num2Controller.text = "";
                       num3Controller.text = "";
                       num4Controller.text = "";
+
+                      //counter for widgets
+                      counterForWidgets++;
+                      counterForTries--;
+                      numberOfTries++;
                     }
                   });
                 },

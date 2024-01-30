@@ -7,12 +7,12 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:passcodecr/Win/GameOver/win_page2.dart";
 import "package:passcodecr/choosing_difficulty.dart";
+import "package:passcodecr/components/winPageEasyMode.dart";
 import "package:passcodecr/pages/game_over_page.dart";
 
-
 import "package:passcodecr/stateManagement/wins_state.dart";
-import "package:passcodecr/util/utilForAdditionalWidget.dart";
-import "package:passcodecr/util/utilFroEasyMode.dart";
+import 'package:passcodecr/util/utilForEasyPlusMode.dart';
+import 'package:passcodecr/util/utilForEasyMode.dart';
 
 class EasyPlusGameMode extends StatefulWidget {
   const EasyPlusGameMode({super.key});
@@ -34,6 +34,12 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
   int counterForWidgets = 0;
   int counterForTries = 4;
   int numberOfTries = 0;
+
+  //array of maps for passing correct numbers and spots widgets Because it is changing its value each time
+
+  List<Map<int, bool>> arrayOfMapsForPresentNumber = [];
+  List<Map<int, bool>> arrayOfMapsForCorrectSpot = [];
+  List<List<int>> arrayOfListinputNumbers = [];
 
   void initState() {
     super.initState();
@@ -78,11 +84,12 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => WinPage2(
+              builder: (context) => WinPageEasyMode(
                     nameOfPage: "EasyPlus",
                     randomNumbers: randomNumbers,
-                    tries: bodyElements,
-                    numerOfTries: numberOfTries,
+                    arrayOfListinputNumbers: arrayOfListinputNumbers,
+                    arrayOfMapsForCorrectSpot: arrayOfMapsForCorrectSpot,
+                    arrayOfMapsForPresentNumbers: arrayOfMapsForPresentNumber,
                   ),
               fullscreenDialog: true));
     }
@@ -186,6 +193,11 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
         correctSpots++;
       }
     }
+
+    //adding to list for every input its corresponding map of present and correct spot numbers
+    arrayOfMapsForPresentNumber.add(Map.from(isNumberPresent));
+    arrayOfMapsForCorrectSpot.add(Map.from(isNumberOnCorrectSpot));
+    arrayOfListinputNumbers.add(List.from(inputNumbers));
 
     return {correctNumbers: correctSpots};
   }
@@ -316,6 +328,11 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
                       inputNumbers.clear();
                       counterForTries = 5;
                       counterForWidgets = 0;
+
+                      //clearing all arrays
+                      arrayOfListinputNumbers.clear();
+                      arrayOfMapsForCorrectSpot.clear();
+                      arrayOfMapsForPresentNumber.clear();
                     });
                   },
                   child: Container(
@@ -563,10 +580,6 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
                       isNumberOnCorrectSpot[2] = false;
                       isNumberOnCorrectSpot[3] = false;
 
-                      //counter for widgets
-                      counterForWidgets++;
-                      counterForTries--;
-                      numberOfTries++;
                       //making visiable correct numbers and correct spots
                       colorOfText = Colors.black;
 
@@ -598,6 +611,11 @@ class _EasyPlusGameModeState extends State<EasyPlusGameMode> {
                       num2Controller.text = "";
                       num3Controller.text = "";
                       num4Controller.text = "";
+
+                      //counter for widgets
+                      counterForWidgets++;
+                      counterForTries--;
+                      numberOfTries++;
                     }
                   });
                 },

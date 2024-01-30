@@ -1,3 +1,4 @@
+import "dart:ffi";
 import "dart:math";
 import "package:audioplayers/audioplayers.dart";
 import "package:awesome_snackbar_content/awesome_snackbar_content.dart";
@@ -5,9 +6,10 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:passcodecr/Win/GameOver/win_page2.dart";
 import "package:passcodecr/choosing_difficulty.dart";
+import "package:passcodecr/components/winPageEasyMode.dart";
 import "package:passcodecr/pages/game_over_page.dart";
 import "package:passcodecr/stateManagement/wins_state.dart";
-import "package:passcodecr/util/utilFroEasyMode.dart";
+import 'package:passcodecr/util/utilForEasyMode.dart';
 
 class EasyGameMode extends StatefulWidget {
   const EasyGameMode({super.key});
@@ -72,11 +74,12 @@ class _EasyGameModeState extends State<EasyGameMode> {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => WinPage2(
+            builder: (context) => WinPageEasyMode(
                   nameOfPage: "Easy",
                   randomNumbers: randomNumbers,
-                  tries: bodyElements,
-                  numerOfTries: numberOfTries,
+                  arrayOfListinputNumbers: arrayOfListinputNumbers,
+                  arrayOfMapsForCorrectSpot: arrayOfMapsForCorrectSpot,
+                  arrayOfMapsForPresentNumbers: arrayOfMapsForPresentNumber,
                 ),
             fullscreenDialog: true),
       );
@@ -85,7 +88,7 @@ class _EasyGameModeState extends State<EasyGameMode> {
 
   void addBodyElements(String num1, String num2, String num3, String num4,
       int correctNumbers, int correctSpots, int counterForWidgets) {
-    counterForWidgets < 5
+    counterForWidgets < 4
         ? bodyElements.add(Padding(
             padding: const EdgeInsets.only(
               bottom: 5.0,
@@ -161,6 +164,16 @@ class _EasyGameModeState extends State<EasyGameMode> {
     3: false,
   };
 
+  //array of maps for passing correct numbers and spots widgets Because it is changing its value each time
+
+  List<Map<int, bool>> arrayOfMapsForPresentNumber = [];
+  List<Map<int, bool>> arrayOfMapsForCorrectSpot = [];
+  List<List<int>> arrayOfListinputNumbers = [];
+
+  //tries storing logic
+  int tryNumber = 0;
+  List<List<int>> inputTries = [];
+
   Map<int, int> checkNumbers(List<int> inputNumbers, List<int> randomNumbers) {
     int correctNumbers = 0;
     int correctSpots = 0;
@@ -181,7 +194,10 @@ class _EasyGameModeState extends State<EasyGameMode> {
         correctSpots++;
       }
     }
-
+    //adding to list for every input its corresponding map of present and correct spot numbers
+    arrayOfMapsForPresentNumber.add(Map.from(isNumberPresent));
+    arrayOfMapsForCorrectSpot.add(Map.from(isNumberOnCorrectSpot));
+    arrayOfListinputNumbers.add(List.from(inputNumbers));
     return {correctNumbers: correctSpots};
   }
 
@@ -226,6 +242,14 @@ class _EasyGameModeState extends State<EasyGameMode> {
 
   bool isAnyNumerZeor(int a, int b, int c, int d) {
     return a == 0 || b == 0 || c == 0 || d == 0;
+  }
+
+  bool isAnotherContainerShown = false;
+
+  void changeIsAnotherContainerShown() {
+    setState(() {
+      isAnotherContainerShown = !isAnotherContainerShown;
+    });
   }
 
   Widget build(BuildContext context) {
@@ -297,7 +321,12 @@ class _EasyGameModeState extends State<EasyGameMode> {
                       num4Controller.text = "";
                       inputNumbers.clear();
                       counterForTries = 5;
+                      numberOfTries = 0;
                       counterForWidgets = 0;
+//
+                      arrayOfMapsForCorrectSpot.clear();
+                      arrayOfMapsForPresentNumber.clear();
+                      arrayOfListinputNumbers.clear();
                     });
                   },
                   child: Container(
@@ -504,7 +533,7 @@ class _EasyGameModeState extends State<EasyGameMode> {
               child: GestureDetector(
                 onTap: () {
                   setState(() {
-                    //clearing list input numbers and then adding new numbers to it
+                    // //clearing list input numbers and then adding new numbers to it
                     inputNumbers.clear();
                     //my way of handling parse error
                     if (num1Controller.text == "" ||
@@ -554,6 +583,16 @@ class _EasyGameModeState extends State<EasyGameMode> {
                       inputNumbers.add(int.parse(num3Controller.text));
                       inputNumbers.add(int.parse(num4Controller.text));
 
+                      // print("This is number of tries in easy mode::: "+bodyElements.length.toString());
+
+                      inputTries.add([
+                        int.parse(num1Controller.text),
+                        int.parse(num2Controller.text),
+                        int.parse(num3Controller.text),
+                        int.parse(num4Controller.text),
+                      ]);
+                      tryNumber++;
+
                       //function that checks input and returing correct numbers and correct spots
                       checkInput();
 
@@ -582,8 +621,6 @@ class _EasyGameModeState extends State<EasyGameMode> {
                       counterForWidgets++;
                       counterForTries--;
                       numberOfTries++;
-
-                      print("This is number of tries in easy mode::: "+bodyElements.length.toString());
                     }
                   });
                 },
@@ -607,14 +644,52 @@ class _EasyGameModeState extends State<EasyGameMode> {
             ),
             Spacer(),
 
+            // isAnotherContainerShown
+            //     ? Container(
+            //         child: Column(
+            //           children: bodyElements,
+            //         ),
+            //       )
+            //     : Container(),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       //changeIsAnotherContainerShown();
+
+            //       //print(arrayOfMapsForCorrectSpot);
+
+            //       for (int i = 0; i < arrayOfListinputNumbers.length; i++) {
+            //         print("Try " +
+            //             i.toString() +
+            //             " INPUT NUMBERS: " +
+            //             arrayOfListinputNumbers[i].toString());
+            //       }
+
+            //       for (int i = 0; i < arrayOfMapsForCorrectSpot.length; i++) {
+            //         print("Try " +
+            //             i.toString() +
+            //             " CORRECT SPOTS: " +
+            //             arrayOfMapsForCorrectSpot[i].toString());
+            //       }
+            //       for (int i = 0; i < arrayOfMapsForPresentNumber.length; i++) {
+            //         print("Try " +
+            //             i.toString() +
+            //             " PRESENT NUMBERS: " +
+            //             arrayOfMapsForPresentNumber[i].toString());
+            //       }
+
+            //       print("Number of tries: " + numberOfTries.toString());
+            //     },
+            //     child: Text("Print to console")),
+            Spacer(),
+
             //Uncomment this for debugging
-            Text(
-              "Random number: " + randomNumbers.toString(),
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold),
-            ),
+            // Text(
+            //   "Random number: " + randomNumbers.toString(),
+            //   style: TextStyle(
+            //       color: Colors.black,
+            //       fontSize: 25,
+            //       fontWeight: FontWeight.bold),
+            // ),
             // Text(counterForWidgets.toString()),
             // ElevatedButton(
             //     onPressed: () {

@@ -10,28 +10,28 @@ import 'package:passcodecr/pages/easy_plus.dart';
 import 'package:passcodecr/pages/extreme_game_mode.dart';
 import 'package:passcodecr/pages/hard_game_mode.dart';
 import 'package:passcodecr/pages/medium_game_mode.dart';
+import 'package:passcodecr/util/utilForWinPageEasyMode.dart';
 
-class WinPage2 extends StatefulWidget {
+class WinPageEasyMode extends StatefulWidget {
   final List<int> randomNumbers;
   final String nameOfPage;
-  final List<Widget> tries;
-  final int numerOfTries;
 
-  final List<List<int>> inputTries;
+  final List<List<int>> arrayOfListinputNumbers;
+  final List<Map<int, bool>> arrayOfMapsForCorrectSpot;
+  final List<Map<int, bool>> arrayOfMapsForPresentNumbers;
 
-  WinPage2({
-    required this.randomNumbers,
-    required this.nameOfPage,
-    required this.tries,
-    required this.numerOfTries,
-    required this.inputTries,
-  });
+  WinPageEasyMode(
+      {required this.randomNumbers,
+      required this.nameOfPage,
+      required this.arrayOfListinputNumbers,
+      required this.arrayOfMapsForCorrectSpot,
+      required this.arrayOfMapsForPresentNumbers});
 
   @override
-  State<WinPage2> createState() => _WinPage2State();
+  State<WinPageEasyMode> createState() => _WinPageEasyModeState();
 }
 
-class _WinPage2State extends State<WinPage2> {
+class _WinPageEasyModeState extends State<WinPageEasyMode> {
   String nameOfBackPage = "";
 
   void checkBackName(String nameOfPage) {
@@ -54,17 +54,35 @@ class _WinPage2State extends State<WinPage2> {
 
   initState() {
     super.initState;
-    print("This is number of tries: " + widget.tries.toString());
-
-    printTries();
+    // printTries();
 
     checkBackName(widget.nameOfPage);
+
+    // for (int i = 0; i < widget.arrayOfListinputNumbers.length; i++) {
+    //   print("Try " +
+    //       i.toString() +
+    //       " INPUT NUMBERS: " +
+    //       widget.arrayOfListinputNumbers[i].toString());
+    // }
+
+    // for (int i = 0; i < widget.arrayOfMapsForCorrectSpot.length; i++) {
+    //   print("Try " +
+    //       i.toString() +
+    //       " CORRECT SPOTS: " +
+    //       widget.arrayOfMapsForCorrectSpot[i].toString());
+    // }
+    // for (int i = 0; i < widget.arrayOfMapsForPresentNumbers.length; i++) {
+    //   print("Try " +
+    //       i.toString() +
+    //       " PRESENT NUMBERS: " +
+    //       widget.arrayOfMapsForPresentNumbers[i].toString());
+    // }
   }
 
   //This was writen by Mirza Kadric 27.01.2024 1:22
   void printTries() {
-    for (int i = 0; i < widget.inputTries.length; i++) {
-      print(i.toString() + ": " + widget.inputTries[i].toString());
+    for (int i = 0; i < widget.arrayOfListinputNumbers.length; i++) {
+      print(i.toString() + ": " + widget.arrayOfListinputNumbers[i].toString());
     }
   }
 
@@ -82,9 +100,11 @@ class _WinPage2State extends State<WinPage2> {
         topPadding = 10;
         horizontalPadding = 20;
         heigtOfShowStepsContainer = 400;
+
         Timer(Duration(milliseconds: 500), () {
           setState(() {
             showContentInsideContainer = true;
+            // scrollListToButtom();
           });
         });
       });
@@ -139,6 +159,17 @@ class _WinPage2State extends State<WinPage2> {
               icon: Icon(Icons.error),
               title: Text("Do you want to change Game MODE?"),
             ));
+  }
+
+  //Scrolling of tries inside container :D Why not
+  final ScrollController _scrollController = ScrollController();
+
+  void scrollListToButtom() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
@@ -270,25 +301,32 @@ class _WinPage2State extends State<WinPage2> {
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold),
                                       )
-                                    : Text(
+                                    : Container(),
+                                showContentInsideContainer
+                                    ? Text(
                                         "It took you " +
-                                            messageForOpenedContainer(
-                                                widget.numerOfTries) +
+                                            messageForOpenedContainer(widget
+                                                .arrayOfListinputNumbers
+                                                .length) +
                                             " to crack code",
                                         style: GoogleFonts.inter(
                                             color: Colors.black,
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold),
-                                      ),
+                                      )
+                                    : Container(),
+                                // showContentInsideContainer
+                                //     ? Icon(
+                                //         Icons.close_fullscreen_rounded,
+                                //         size: 30,
+                                //       )
+                                //     : Container(),
                                 !isContainerOpen
                                     ? Icon(
                                         Icons.more_horiz,
                                         size: 40,
                                       )
-                                    : Icon(
-                                        Icons.close_fullscreen,
-                                        size: 30,
-                                      )
+                                    : Container()
                               ],
                             ),
                           ),
@@ -339,13 +377,71 @@ class _WinPage2State extends State<WinPage2> {
                                             ],
                                           )
                                         : Container(),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20.0),
-                                      child: Column(
-                                        children: widget.tries,
-                                      ),
+                                    Container(
+                                      height: 300,
+                                      //color: Colors.red,
+                                      child: ListView.builder(
+                                          itemCount: widget
+                                              .arrayOfListinputNumbers.length,
+                                          itemBuilder: ((context, index) {
+                                            return UtilForWinPageEasyMode(
+                                              num1: widget
+                                                  .arrayOfListinputNumbers[
+                                                      index]
+                                                  .elementAt(0)
+                                                  .toString(),
+                                              num2: widget
+                                                  .arrayOfListinputNumbers[
+                                                      index]
+                                                  .elementAt(1)
+                                                  .toString(),
+                                              num3: widget
+                                                  .arrayOfListinputNumbers[
+                                                      index]
+                                                  .elementAt(2)
+                                                  .toString(),
+                                              num4: widget
+                                                  .arrayOfListinputNumbers[
+                                                      index]
+                                                  .elementAt(3)
+                                                  .toString(),
+                                              isNumberOnCorrectSpot: widget
+                                                  .arrayOfMapsForCorrectSpot
+                                                  .elementAt(index),
+                                              isNumberPresent: widget
+                                                  .arrayOfMapsForPresentNumbers
+                                                  .elementAt(index),
+                                            );
+                                          })),
                                     ),
+                                    // Padding(
+                                    //     padding: const EdgeInsets.symmetric(
+                                    //         horizontal: 20.0),
+                                    //     child: Container(
+                                    //       height: 400,
+                                    //       child: ListView.builder(
+                                    //           itemCount: 3,
+                                    //           itemBuilder: ((context, index) {
+                                    //             return UtilForWinPageEasyMode(
+                                    //               num1: 1.toString(),
+                                    //               num2: 2.toString(),
+                                    //               num3: 3.toString(),
+                                    //               num4: 4.toString(),
+                                    //               isNumberOnCorrectSpot: {
+                                    //                 0: false,
+                                    //                 1: false,
+                                    //                 3: true,
+                                    //                 4: false
+                                    //               },
+                                    //               isNumberPresent: {
+                                    //                 0: true,
+                                    //                 1: false,
+                                    //                 3: false,
+                                    //                 4: false
+                                    //               },
+                                    //             );
+                                    //           })),
+                                    //     )),
                                   ],
                                 )
                               : Container()
@@ -465,19 +561,6 @@ class _WinPage2State extends State<WinPage2> {
               ),
             ),
             Lottie.asset("lib/assets/win.json")
-            // Column(
-            //   crossAxisAlignment: CrossAxisAlignment.start,
-            //   children: [
-            //     Text(
-            //       "Total wins today: SOON",
-            //       style: GoogleFonts.sourceCodePro(fontWeight: FontWeight.bold),
-            //     ),
-            //     Text(
-            //       "Best time: SOON",
-            //       style: GoogleFonts.sourceCodePro(fontWeight: FontWeight.bold),
-            //     )
-            //   ],
-            // )
           ],
         )),
       ),

@@ -51,6 +51,7 @@ class _MediumGameModeState extends State<MediumGameMode> {
                     randomNumbers: randomNumbers,
                     tries: bodyElements,
                     numerOfTries: numberOfTries,
+                    inputTries: [],
                   ),
               fullscreenDialog: true));
     }
@@ -669,11 +670,6 @@ class _MediumGameModeState extends State<MediumGameMode> {
                       isNumberOnCorrectSpot[2] = false;
                       isNumberOnCorrectSpot[3] = false;
 
-                      //counter for widgets
-                      counterForWidgets++;
-                      counterForTries--;
-                      numberOfTries++;
-
                       //making visiable correct numbers and correct spots
                       colorOfText = Colors.black;
 
@@ -705,6 +701,11 @@ class _MediumGameModeState extends State<MediumGameMode> {
                       num2Controller.text = "";
                       num3Controller.text = "";
                       num4Controller.text = "";
+
+                      //counter for widgets
+                      counterForWidgets++;
+                      counterForTries--;
+                      numberOfTries++;
                     }
                   });
                 },
