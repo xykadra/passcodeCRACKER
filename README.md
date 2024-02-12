@@ -26,7 +26,7 @@ PasscodeCRACKER is an engaging mobile game developed in Flutter, where the main 
 - **Objective:** Crack the code in 5 attempts.
 - **Feature:** Duplicate numbers can be generated in the code.
 - **Hint:** Watch out for duplicates and adapt your approach accordingly.
-<img stc="https://github.com/xykadra/passcodeCRACKER/assets/83673916/c6536c8d-3511-4cf6-a006-38b9dca81fcd" width="200">
+<img src="https://github.com/xykadra/passcodeCRACKER/assets/83673916/c6536c8d-3511-4cf6-a006-38b9dca81fcd" width="200">
 
 
 ### 5. Extreme (Unlocked after 10 Hard Wins)
