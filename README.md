@@ -2,7 +2,7 @@
 
 PasscodeCRACKER is an engaging mobile game developed in Flutter, where the main goal is to crack a 4-digit randomly generated code within a specified range of 1-9 (excluding 0). The game offers five exciting modes to challenge your code-breaking skills: Easy, Easy Plus, Medium, Hard, and Extreme.
 
-<img src="https://github.com/xykadra/passcodeCRACKER/assets/83673916/3874708d-eafe-4a0e-8e9e-ef59c9169c14" width="400">
+<img src="https://github.com/xykadra/passcodeCRACKER/assets/83673916/3874708d-eafe-4a0e-8e9e-ef59c9169c14" width="200">
 
 ## Game Modes
 
@@ -10,7 +10,7 @@ PasscodeCRACKER is an engaging mobile game developed in Flutter, where the main 
 - **Objective:** Crack the code in 5 attempts.
 - **Feedback:** Correct numbers and their positions are colored.
 - **Hint:** Keep an eye on the colored positions to guide your next attempts.
-<img src="https://github.com/xykadra/passcodeCRACKER/assets/83673916/7c694236-3b9f-4eac-be42-13aa83b00f9b" width="400">
+<img src="https://github.com/xykadra/passcodeCRACKER/assets/83673916/7c694236-3b9f-4eac-be42-13aa83b00f9b" width="200">
 
 ### 2. Easy Plus
 - **Objective:** Crack the code in 4 attempts.
@@ -20,13 +20,13 @@ PasscodeCRACKER is an engaging mobile game developed in Flutter, where the main 
 - **Objective:** Crack the code in 5 attempts.
 - **Feedback:** Correct numbers and positions are revealed in a text format, not colored.
 - **Hint:** Use the textual feedback to adjust your strategy and crack the code.
-<img src="https://github.com/xykadra/passcodeCRACKER/assets/83673916/60aa63d9-3670-4837-bb94-8b1e3361a6de" width="400">
+<img src="https://github.com/xykadra/passcodeCRACKER/assets/83673916/60aa63d9-3670-4837-bb94-8b1e3361a6de" width="200">
 
 ### 4. Hard (Unlocked after 10 Medium Wins)
 - **Objective:** Crack the code in 5 attempts.
 - **Feature:** Duplicate numbers can be generated in the code.
 - **Hint:** Watch out for duplicates and adapt your approach accordingly.
-<img src="https://github.com/xykadra/passcodeCRACKER/assets/83673916/09c1358a-ac62-4a08-9913-f0fafeb0526e" width="400">
+<img src="https://github.com/xykadra/passcodeCRACKER/assets/83673916/09c1358a-ac62-4a08-9913-f0fafeb0526e" width="200">
 
 ### 5. Extreme (Unlocked after 10 Hard Wins)
 - **Objective:** Crack the code in 8 attempts within 120 seconds.
